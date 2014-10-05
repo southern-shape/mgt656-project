@@ -1,11 +1,17 @@
 {% extends "layout.html" %}
 
 {% block mainContent %}
-	<ul>
-		{% for event in events %}
-		  <li>This is the {{event.title}}</li>
-		{% endfor %}
-	</ul>
+  <div>
+  	<ul>
+  		{% for event in events %}
+  		  <li>Upcoming event: {{event.title}}. {{event.attending.length}} attending so far.</li>
+  		{% endfor %}
+  	</ul>
+  </div>
+  <div>
+    <a href="/events/new">Create a new event</a>
+  </div>
+
 {% endblock %}
 
 {% block footer %}

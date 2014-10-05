@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block mainContent %}
+
+  {% if errors %}
+    <div class="form-errors">
+      <ul>
+        {% for error in errors %}
+          <li>{{error}}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+	<form id="create-event" method="POST">
+    <label for="title">Event title:</label>
+    <input type="text" name="title">
+  </form>
+{% endblock %}
+
+

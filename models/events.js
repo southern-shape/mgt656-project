@@ -2,16 +2,16 @@ module.exports = [
   {
     'title': "SOM Beach Party",
     'date': 'This Friday',
-    'location': 'Evans Hall'
+    'attending': ['kyle.jensen@yale.edu', 'kim.kardashian@yale.edu']
   },
   {
     'title': "BBQ for hackers",
     'date': '6/1/2015',
-    'location': "Kyle's house"
+    'attending': ['kyle.jensen@yale.edu', 'kim.kardashian@yale.edu']
   },
   {
     'title': "BBQ for managers",
     'date': '7/1/2015',
-    'location': "Miles' house"
+    'attending': ['kim.kardashian@yale.edu']
   }
 ];
