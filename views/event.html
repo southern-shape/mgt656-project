@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block mainContent %}
+	<ul>
+		{% for event in events %}
+		  <li>This is the {{event.title}}</li>
+		{% endfor %}
+	</ul>
+{% endblock %}
+
+{% block footer %}
+	Look at me customize the footer. The time is now {{time}}.
+{% endblock %}

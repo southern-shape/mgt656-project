@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ title }}</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+
+	<body>
+
+    {% block header %}
+      <h1>{{ title }}</h1>
+    {% endblock %}
+
+    {% block mainContent %}
+      <p>Welcome to {{ title }}. {{tagline}}</p>
+    {% endblock %}
+
+    {% block footer %}
+      <p>This be the footer.</p>
+    {% endblock %}
+
+  </body>
+</html>
