@@ -4,7 +4,6 @@ var path = require('path');
 var logger = require('morgan');
 var nunjucks = require('nunjucks');
 var bodyParser = require('body-parser');
-var expressValidator = require('express-validator');
 
 // Create our express app
 var app = express();
