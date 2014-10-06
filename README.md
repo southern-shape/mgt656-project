@@ -28,3 +28,16 @@ And, finally, you can run the code
 That will run the [nodemon](https://github.com/remy/nodemon)
 program, which is a nice way of running node and then restarting
 it when your files change.
+
+## What we're using
+
+This application relies on a number of open source projects.
+Obviously, it is a [node.js](http://nodejs.org/) application.
+We are using the following components, which are built for node
+applications and written by people that have made them open 
+source.
+
+* [Express.js](http://expressjs.com/): Express is a minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications.
+* [Nunjucks](http://mozilla.github.io/nunjucks/): A templating language for JavaScript. This allows us to say there is a certain default page and every other page should like just like it, maybe changing just small parts.
+* [Morgan](https://github.com/expressjs/morgan): HTTP request logger middleware for node.js. This allows us to print pretty logging statements while the application is handling requests.
+* [Validator](https://github.com/chriso/validator.js): A library of string validators and sanitizers. This helps us ensure that parameters sent to our application by users are valid.
