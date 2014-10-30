@@ -5,18 +5,18 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
 
-	<body>
+	<body class="container">
 
     {% block header %}
       <header>Hey, I'm in the header</header>
     {% endblock %}
 
     {% block mainContent %}
-      <p>Welcome to {{ title }}. {{tagline}}</p>
+      <section>Welcome to {{ title }}. {{tagline}}</section>
     {% endblock %}
 
     {% block footer %}
-      <p>This be the footer.</p>
+      <footer>This be the footer.</footer>
     {% endblock %}
 
   </body>
