@@ -1,0 +1,5 @@
+<ul>
+  {% for event in events %}
+    <li>Upcoming event: {{event.title}}. {{event.attending.length}} attending so far.</li>
+  {% endfor %}
+</ul>

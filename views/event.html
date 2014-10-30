@@ -2,11 +2,7 @@
 
 {% block mainContent %}
   <div>
-  	<ul>
-  		{% for event in events %}
-  		  <li>Upcoming event: {{event.title}}. {{event.attending.length}} attending so far.</li>
-  		{% endfor %}
-  	</ul>
+    {% include "fragments/events-list.html" %}
   </div>
   <div>
     <a href="/events/new">Create a new event</a>
