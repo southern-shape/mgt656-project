@@ -27,13 +27,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({extended: true}));
 
 // Import our controllers
-var indexController = require('./routes/index');
-var aboutController = require('./routes/about');
-var eventControllers = require('./routes/events');
+var indexControllers = require('./controllers/index');
+var aboutControllers = require('./controllers/about');
+var eventControllers = require('./controllers/events');
 
 // Add routes mapping URLs to controllers
-app.get('/', indexController);
-app.get('/about', aboutController);
+app.get('/', indexControllers.index);
+app.get('/about', aboutControllers.about);
 app.get('/events', eventControllers.listEvents);
 app.get('/events/new', eventControllers.newEvent);
 app.post('/events/new', eventControllers.saveEvent);
