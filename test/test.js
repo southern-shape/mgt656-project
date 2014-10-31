@@ -1,3 +1,5 @@
+'use strict';
+
 var assert = require('assert');
 var app = require('../app.js');
 var Browser = require('zombie');

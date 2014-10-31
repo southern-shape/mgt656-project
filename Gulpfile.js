@@ -2,6 +2,7 @@
 // do two things when we make changes to the code:
 // 1) check it for errors ("lint it") and 2) restart
 // the application.
+
 'use strict';
 
 var gulp = require('gulp');

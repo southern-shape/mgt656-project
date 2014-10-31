@@ -1,24 +1,26 @@
+'use strict';
+
 /**
  * An Array of all the events
  */
 var allEvents = [
   {
     id: 0,
-    title: "SOM House Party",
+    title: 'SOM House Party',
     date: 'This Friday',
     image: 'http://i.imgur.com/pXjrQ.gif',
     attending: ['kyle.jensen@yale.edu', 'kim.kardashian@yale.edu']
   },
   {
     id: 1,
-    title: "BBQ party for hackers and nerds",
+    title: 'BBQ party for hackers and nerds',
     date: '6/1/2015',
     image: null,
     attending: ['kyle.jensen@yale.edu', 'kim.kardashian@yale.edu']
   },
   {
     id: 2,
-    title: "BBQ for managers",
+    title: 'BBQ for managers',
     date: '7/1/2015',
     image: 'http://i.imgur.com/0qylcLh.jpg',
     attending: ['kim.kardashian@yale.edu'],
@@ -34,10 +36,10 @@ function getById (id) {
     if (id === allEvents[i]){
       return allEvents[i];
     }
-  };
+  }
 }
 
 module.exports = exports = {
   all: allEvents,
   getById: getById
-}
+};

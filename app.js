@@ -1,3 +1,5 @@
+'use strict';
+
 // Import our requirements
 var express = require('express');
 var path = require('path');
