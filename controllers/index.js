@@ -1,4 +1,4 @@
-
+'use strict';
 
 /**
  * Controller that renders our index (home) page.

@@ -1,3 +1,4 @@
+'use strict';
 var events = require('../models/events');
 var validator = require('validator');
 
@@ -29,7 +30,7 @@ function newEvent(request, response){
  */
 function saveEvent(request, response){
   var contextData = {};
-  var submittedTitle = request.body['title'];
+  var submittedTitle = request.body.title;
 
   if (validator.isLength(submittedTitle, 5, 100) === true) {
     var newEvent = {
@@ -41,9 +42,9 @@ function saveEvent(request, response){
     events.all.push(newEvent);
     response.redirect('/events');
   }else{
-    contextData.errors = ["Your title should be between 5 and 100 letters."];
+    contextData.errors = ['Your title should be between 5 and 100 letters.'];
     response.render('create-event.html', contextData);
-  };
+  }
 }
 
 
@@ -56,4 +57,4 @@ module.exports = {
   'eventDetail': null,
   'newEvent': newEvent,
   'saveEvent': saveEvent
-}
+};
