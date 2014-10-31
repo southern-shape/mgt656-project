@@ -13,6 +13,9 @@
     "validator": "^3.19.1"
   },
   "devDependencies": {
+    "gulp": "^3.8.9",
+    "gulp-jshint": "^1.8.6",
+    "gulp-nodemon": "^1.0.4",
     "mocha": "^2.0.1",
     "nodemon": "^1.2.1",
     "zombie": "^2.1.1"
