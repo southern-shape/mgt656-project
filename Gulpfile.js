@@ -15,7 +15,7 @@ gulp.task('lint', function () {
     .pipe(jshint.reporter('jshint-stylish'));
 });
 
-gulp.task('develop', function () {
+gulp.task('default', function () {
   nodemon({ script: 'start-app.js', ext: 'html js'})
     .on('change', ['lint'])
     .on('restart', function () {
