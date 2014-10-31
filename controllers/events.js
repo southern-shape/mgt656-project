@@ -38,7 +38,7 @@ function saveEvent(request, response){
       image: null,
       attending: []
     };
-    events.push(newEvent);
+    events.all.push(newEvent);
     response.redirect('/events');
   }else{
     contextData.errors = ["Your title should be between 5 and 100 letters."];
