@@ -6,7 +6,6 @@ var Browser = require('zombie');
 var async = require('async');
 var chai = require('chai');
 var _ = require('lodash');
-var expect = chai.expect;
 
 describe('The home page',function(){
   before(function(done){
@@ -35,8 +34,8 @@ describe('The home page',function(){
     function getAboutLink (url, callback) {
       browser.visit(url, function(){
         if (!browser.success) {
-          return callback(new Error("Page does not exist"), false);
-        };
+          return callback(new Error('Page does not exist'), false);
+        }
         return callback(null, expect(browser.query('footer a[href="/about"]')).to.be.ok); 
       });
     }
