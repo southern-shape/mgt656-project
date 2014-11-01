@@ -6,6 +6,7 @@ var app = require('../app.js');
 var Browser = require('zombie');
 var async = require('async');
 var chai = require('chai');
+var expect = chai.expect;
 var _ = require('lodash');
 
 describe('The home page',function(){
@@ -35,14 +36,14 @@ describe('The home page',function(){
     function getAboutLink (url, callback) {
       browser.visit(url, function(){
         if (!browser.success) {
-          return callback(new Error('Page does not exist'), false);
+          return callback(null, true);
         }
         return callback(null, expect(browser.query('footer a[href="/about"]')).to.be.ok); 
       });
     }
     var urls = ['/', '/about', '/events/new', '/events/0', '/events/1', '/events/2'];
     async.mapSeries(urls, getAboutLink, function(err, results){
-      expect(_.all(results)).to.be.ok;
+      expect(_.all(results)).to.be.true;
       done();
     });
   });
