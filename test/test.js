@@ -48,11 +48,29 @@ describe('The home page',function(){
     });
   });
 
-  it('should refuse empty submissions');
-  it('should refuse partial submissions');
-  it('should keep values on partial submissions');
-  it('should refuse invalid emails');
-  it('should accept complete submissions');
+  after(function(done){
+    this.server.close(done);
+  });
+});
+
+
+describe('As a user, I can visit your homepage',function(){
+  before(function(done){
+    this.port = process.env.PORT || 3005;
+    this.site = 'http://localhost:' + this.port;
+    this.browser = new Browser({
+      site: this.site,
+    });
+    this.server = app.listen(this.port, done);
+  });
+
+  before(function(done){
+    this.browser.visit(this.site, done);
+  });
+
+  it('should have your team logo', function(){
+    expect(this.browser.query('img#logo[src*=".png"]')).to.be.ok;
+  });
 
   after(function(done){
     this.server.close(done);
