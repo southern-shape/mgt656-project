@@ -72,6 +72,17 @@ describe('As a user, I can visit your homepage',function(){
     expect(this.browser.query('img#logo[src*=".png"]')).to.be.ok;
   });
 
+  it('should have a list of events', function(){
+    expect(this.browser.queryAll('li.event[id*="event-"]')).to.be.ok;
+  });
+
+  it('should have a list of events', function(){
+    var numEvents = this.browser.queryAll('li.event[id*="event-"]').length;
+    var numEventsWithTime = this.browser.queryAll('li.event[id*="event-"] time[datetime]').length;
+    expect(numEvents === numEventsWithTime);
+
+  });
+
   after(function(done){
     this.server.close(done);
   });
