@@ -6,6 +6,7 @@ var path = require('path');
 var logger = require('morgan');
 var nunjucks = require('nunjucks');
 var bodyParser = require('body-parser');
+var strftime = require('strftime');
 
 // Create our express app
 var app = express();
@@ -14,6 +15,8 @@ var app = express();
 nunjucks.configure('views', {
     autoescape: true,
     express: app
+}).addFilter('prettyDate', function(dateObject) {
+    return strftime('%A, %b. %e at %l:%M%P', dateObject);
 });
 
 // Use 'development' level of logging, ie. verbose
