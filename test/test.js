@@ -73,16 +73,21 @@ describe('As a user, I can visit your homepage',function(){
   });
 
   it('should have a list of events', function(){
-    expect(this.browser.queryAll('li.event[id*="event-"]')).to.be.ok;
+    expect(this.browser.query('li.event[id*="event-"]')).to.be.ok;
   });
 
-  it('should have a list of events', function(){
+  it('should have a time tag for each event', function(){
     var numEvents = this.browser.queryAll('li.event[id*="event-"]').length;
     var numEventsWithTime = this.browser.queryAll('li.event[id*="event-"] time[datetime]').length;
-    expect(numEvents === numEventsWithTime);
-
+    expect(numEvents).to.equal(numEventsWithTime).and.to.be.above(0);
   });
 
+  it('should have a link for each event', function(){
+    var numEvents = this.browser.queryAll('li.event[id*="event-"]').length;
+    var numEventsWithLinks = this.browser.queryAll('li.event[id*="event-"] a[href^="/events/"]').length;
+    expect(numEvents).to.equal(numEventsWithLinks).and.to.be.above(0);
+  });
+  
   after(function(done){
     this.server.close(done);
   });
