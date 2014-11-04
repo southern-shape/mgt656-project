@@ -95,6 +95,18 @@ describe('The API',function(){
     })
   });
 
+  it('should allow for searching events by title', function(done){
+    var search = 'BBQ';
+    var url = this.url + '?search=' + search;
+    request(url, function (error, response, body) {
+      var data = JSON.parse(body);
+      for (var i = data.events.length - 1; i >= 0; i--) {
+        expect(data.events[i].title.indexOf(search)).is.above(-1);
+      };
+      done();
+    })
+  });
+
   after(function(done){
     this.server.close(done);
   });
