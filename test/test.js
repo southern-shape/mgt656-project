@@ -8,11 +8,15 @@ var async = require('async');
 var chai = require('chai');
 var expect = chai.expect;
 var _ = require('lodash');
+var request = require('request');
+
+var HOST = 'localhost';
+var PORT = parseInt(process.env.PORT) || 3005;
 
 describe('The home page',function(){
   before(function(done){
-    this.port = process.env.PORT || 3005;
-    this.site = 'http://localhost:' + this.port;
+    this.port = PORT;
+    this.site = 'http://' + HOST + ':' + this.port;
     this.browser = new Browser({
       site: this.site,
     });
@@ -48,25 +52,6 @@ describe('The home page',function(){
     });
   });
 
-  after(function(done){
-    this.server.close(done);
-  });
-});
-
-
-describe('As a user, I can visit your homepage',function(){
-  before(function(done){
-    this.port = process.env.PORT || 3005;
-    this.site = 'http://localhost:' + this.port;
-    this.browser = new Browser({
-      site: this.site,
-    });
-    this.server = app.listen(this.port, done);
-  });
-
-  before(function(done){
-    this.browser.visit(this.site, done);
-  });
 
   it('should have your team logo', function(){
     expect(this.browser.query('img#logo[src*=".png"]')).to.be.ok;
@@ -88,6 +73,28 @@ describe('As a user, I can visit your homepage',function(){
     expect(numEvents).to.equal(numEventsWithLinks).and.to.be.above(0);
   });
   
+  after(function(done){
+    this.server.close(done);
+  });
+});
+
+describe('The API',function(){
+  before(function(done){
+    this.server = app.listen(PORT, done);
+    this.url = 'http://' + HOST + ':' + PORT + '/api/events';
+
+  });
+
+  it('should return an array of upcoming events in JSON format', function(done){
+    request(this.url, function (error, response, body) {
+      expect(error).is.null;
+      var data = JSON.parse(body);
+      expect(data).to.have.key('events');
+      expect(data.events).to.be.a('Array');
+      done();
+    })
+  });
+
   after(function(done){
     this.server.close(done);
   });
