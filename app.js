@@ -11,6 +11,8 @@ var strftime = require('strftime');
 // Create our express app
 var app = express();
 
+//------------- App configuration
+
 // Configure our templating engine: nunjucks
 nunjucks.configure('views', {
     autoescape: true,
@@ -30,6 +32,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 // This means we can access the parameters of submitted
 // forms and such.
 app.use(bodyParser.urlencoded({extended: true}));
+
+
+//------------- Adding routes to controllers
+
 
 // Import our controllers
 var indexControllers = require('./controllers/index');
