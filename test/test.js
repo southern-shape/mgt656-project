@@ -143,3 +143,38 @@ describe('The about page',function(){
     this.server.close(done);
   });
 });
+
+
+describe('The new event page',function(){
+  before(function(done){
+    this.server = app.listen(PORT, done);
+  });
+
+  before(function(done){
+    this.site = 'http://' + HOST + ':' + PORT + '/events/new';
+    this.browser = new Browser();
+    this.browser.visit(this.site, done);
+  });
+
+  it('should exist', function(){
+    expect(this.browser.success).to.be.ok;
+  });
+
+  it('should have a form that can be posted back', function(){
+    expect(this.browser.query('form[method="POST"]')).to.be.ok;
+  });
+
+  it('should have all the required form fields', function(){
+    var requiredFields = ['title', 'location', 'image', 'year', 'month', 'day', 'hour', 'minute'];
+    for (var i = requiredFields.length - 1; i >= 0; i--) {
+      expect(this.browser.query('[name="' + requiredFields[i] + '"]')).to.be.ok;
+    };
+  });
+
+
+
+
+  after(function(done){
+    this.server.close(done);
+  });
+});
