@@ -111,3 +111,31 @@ describe('The API',function(){
     this.server.close(done);
   });
 });
+
+
+describe('The about page',function(){
+  before(function(done){
+    this.server = app.listen(PORT, done);
+  });
+
+  before(function(done){
+    this.site = 'http://' + HOST + ':' + PORT + '/about';
+    this.browser = new Browser();
+    this.browser.visit(this.site, done);
+  });
+
+  it('should have people on it', function(){
+    expect(this.browser.query('span[id$="-name"]')).to.be.ok;
+  });
+
+  it('should have a picture of each person', function(){
+    var numPeople = this.browser.query('span[id$="-name"]').length;
+    var numImages = this.browser.query('img[id$="-headshot"]').length;
+    expect(numPeople).to.equal(numImages);
+  });
+
+
+  after(function(done){
+    this.server.close(done);
+  });
+});
