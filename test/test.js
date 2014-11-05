@@ -35,6 +35,10 @@ describe('The home page',function(){
     expect(this.browser.query('link[href*="bootstrap.css"]')).to.be.ok;
   });
 
+  it('should have a link to create a new event', function(){
+    expect(this.browser.query('a#new[href*="/events/new"]')).to.be.ok;
+  });
+
   it('should have a link to the about page in the footer of all pages that exist', function(done){
     var browser = this.browser;
     function getAboutLink (url, callback) {
