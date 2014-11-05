@@ -31,7 +31,7 @@ describe('The home page',function(){
     expect(this.browser.success).to.be.ok;
   });
 
-  it('should include bootstrap css', function(done){
+  it('should include bootstrap css', function(){
     expect(this.browser.query('link[href*="bootstrap.css"]')).to.be.ok;
   });
 
