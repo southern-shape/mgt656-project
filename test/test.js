@@ -164,9 +164,12 @@ describe('The new event page',function(){
     expect(this.browser.query('form[method="POST"]')).to.be.ok;
   });
 
-  it('should have all the required form fields', function(){
+  it('should have appropriate form fields and labels', function(){
     var requiredFields = ['title', 'location', 'image', 'year', 'month', 'day', 'hour', 'minute'];
     for (var i = requiredFields.length - 1; i >= 0; i--) {
+      // Test for labels
+      expect(this.browser.query('[for="' + requiredFields[i] + '"]')).to.be.ok;
+      // Test for form fields
       expect(this.browser.query('[name="' + requiredFields[i] + '"]')).to.be.ok;
     };
   });
