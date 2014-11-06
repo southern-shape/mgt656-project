@@ -55,20 +55,24 @@ function newEvent(request, response){
  * our global list of events.
  */
 function saveEvent(request, response){
-  var contextData = {};
-  var submittedTitle = request.body.title;
+  var contextData = {errors: []};
 
-  if (validator.isLength(submittedTitle, 5, 100) === true) {
+  if (validator.isLength(request.body.title, 5, 50) === false) {
+    contextData.errors = ['Your title should be between 5 and 100 letters.'];
+  }
+
+
+  if (contextData.errors.length === 0) {
     var newEvent = {
-      title: submittedTitle,
-      location: 'NOT YET SET',
-      image: null,
+      title: request.body.title,
+      location: request.body.location,
+      image: request.body.image,
+      date: new Date(),
       attending: []
     };
     events.all.push(newEvent);
     response.redirect('/events');
   }else{
-    contextData.errors = ['Your title should be between 5 and 100 letters.'];
     response.render('create-event.html', contextData);
   }
 }
