@@ -183,6 +183,52 @@ describe('The new event creation page',function(){
 });
 
 
+describe('The event detail pages',function(){
+  before(function(done){
+    this.server = app.listen(PORT, done);
+  });
+  it('should exist for each event and should have title, image, etc', function(done){
+    var fetchEventDetail = function (ev, cb) {
+      var browser = Browser();
+      console.log('bbaaaaaaa');
+      return browser.visit(SITE + '/event/' + ev.id, function(){
+        expect(browser.success).to.be.ok();
+        console.log('wooooot');
+        cb();
+      });
+    }
+    console.log(events.all);
+    async.map(events.all, fetchEventDetail, function(err, results){
+      console.log(results);
+      done();
+    });
+  });
+  after(function(done){
+    this.server.close(done);
+  });
+});
+
+
+describe('The event detail pages',function(){
+  before(function(done){
+    this.server = app.listen(PORT, done);
+  });
+  it('should exist for each event and should have title, image, etc', function(done){
+    var fetchEventDetail = function (ev, cb) {
+      return request.get(SITE + '/event/' + ev.id, cb);
+    }
+    console.log(events.all);
+    async.map(events.all, fetchEventDetail, function(err, results){
+      console.log(results.length);
+      // console.log(results);
+      done();
+    });
+  });
+  after(function(done){
+    this.server.close(done);
+  });
+});
+
 describe('The form for creating new events',function(){
   before(function(done){
     this.server = app.listen(PORT, done);
@@ -333,19 +379,4 @@ describe('The form for creating new events',function(){
   });
 });
 
-
-describe('The event detail pages',function(){
-  before(function(done){
-    this.server = app.listen(PORT, done);
-  });
-  it('should exist', function(done){
-    var response = request.get(SITE + '/events/0');
-    done();
-    // async.mapSeries(urls, getAboutLink, function(err, results){
-    //   expect(_.all(results)).to.be.true;
-    //   done();
-    // });
-
-  });
-});
 
