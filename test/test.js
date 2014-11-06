@@ -1,6 +1,9 @@
 /*jshint expr: true*/
 'use strict';
 
+// Set the NODE_ENV environment variable to testing
+process.env.NODE_ENV = 'testing';
+
 var assert = require('assert');
 var app = require('../app.js');
 var Browser = require('zombie');
