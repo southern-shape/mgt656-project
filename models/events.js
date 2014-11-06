@@ -12,6 +12,7 @@ var allEvents = [
     // 2013 at 4:30pm local time.
     date:   new Date(2016, 0, 17, 16, 30, 0),
     image: 'http://i.imgur.com/pXjrQ.gif',
+    location: 'Kyle \'s house',
     attending: ['kyle.jensen@yale.edu', 'kim.kardashian@yale.edu']
   },
   {
@@ -19,6 +20,7 @@ var allEvents = [
     title: 'BBQ party for hackers and nerds',
     date:   new Date(2015, 8, 1, 19, 0, 0),
     image: null,
+    location: 'Miles\' house',
     attending: ['kyle.jensen@yale.edu', 'kim.kardashian@yale.edu']
   },
   {
@@ -26,6 +28,7 @@ var allEvents = [
     title: 'BBQ for managers',
     date:   new Date(2015, 9, 20, 18, 0, 0),
     image: 'http://i.imgur.com/0qylcLh.jpg',
+    location: 'Barry Nalebuff\'s house',
     attending: ['kim.kardashian@yale.edu'],
   }
 ];
