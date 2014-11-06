@@ -45,7 +45,6 @@ function listEvents(request, response) {
  * Controller that renders a page for creating new events.
  */
 function newEvent(request, response){
-  console.log(request.body);
   var contextData = {};
   response.render('create-event.html', contextData);
 }
