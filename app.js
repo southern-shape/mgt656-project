@@ -22,7 +22,9 @@ nunjucks.configure('views', {
 });
 
 // Use 'development' level of logging, ie. verbose
-app.use(logger('dev'));
+if (process.env.NODE_ENV !== 'testing') {
+  app.use(logger('dev'));
+}
 
 // Serve images, css, and client-side js about of the
 // directory named 'public'
