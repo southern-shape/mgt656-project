@@ -251,8 +251,8 @@ describe('The form for creating new events',function(){
     },
     {
       field: 'month',
-      min: 0,
-      max: 11
+      min: 1,
+      max: 12
     },
     {
       field: 'day',
