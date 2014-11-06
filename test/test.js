@@ -311,6 +311,21 @@ describe('The form for creating new events',function(){
     thisTest((cases[i]));
   };
 
+  it('should redirect the user to the event detail page if the form is valid', function(done){
+    var postData = {
+      url: this.url,
+      form: this.getGoodData()
+    };
+    request.post(postData, function(err, httpResponse, body){
+      expect(err).to.be.null;
+      expect(httpResponse.statusCode).to.equal(302, "Bad response code");
+      expect(httpResponse.headers).to.contain.key('location');
+      expect(httpResponse.headers.location).to.match(/events\/\d+\/?$/, "Bad redirect location, it should look like events/4, events/5, etc");
+      done();
+    });
+
+  });
+
 
   after(function(done){
     this.server.close(done);
