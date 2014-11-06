@@ -15,19 +15,19 @@ var request = require('request');
 
 var HOST = 'localhost';
 var PORT = parseInt(process.env.PORT) || 3005;
+var SITE = 'http://' + HOST + ':' + PORT;
+
+
 
 describe('The home page',function(){
   before(function(done){
     this.port = PORT;
-    this.site = 'http://' + HOST + ':' + this.port;
-    this.browser = new Browser({
-      site: this.site,
-    });
+    this.browser = new Browser({site: SITE});
     this.server = app.listen(this.port, done);
   });
 
   before(function(done){
-    this.browser.visit(this.site, done);
+    this.browser.visit(SITE, done);
   });
 
   it('should be up and running', function(){
@@ -126,9 +126,8 @@ describe('The about page',function(){
   });
 
   before(function(done){
-    this.site = 'http://' + HOST + ':' + PORT + '/about';
-    this.browser = new Browser();
-    this.browser.visit(this.site, done);
+    this.browser = new Browser({site: SITE});
+    this.browser.visit('/about', done);
   });
 
   it('should have people on it', function(){
@@ -154,9 +153,8 @@ describe('The new event page',function(){
   });
 
   before(function(done){
-    this.site = 'http://' + HOST + ':' + PORT + '/events/new';
-    this.browser = new Browser();
-    this.browser.visit(this.site, done);
+    this.browser = new Browser({site: SITE});
+    this.browser.visit('/events/new', done);
   });
 
   it('should exist', function(){
