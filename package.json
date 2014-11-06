@@ -19,6 +19,7 @@
     "gulp": "^3.8.9",
     "gulp-jshint": "^1.8.6",
     "gulp-nodemon": "^1.0.4",
+    "jsdom": "^1.2.0",
     "jshint-stylish": "^1.0.0",
     "lodash": "^2.4.1",
     "mocha": "^2.0.1",

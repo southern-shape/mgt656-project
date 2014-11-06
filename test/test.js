@@ -12,6 +12,7 @@ var chai = require('chai');
 var expect = chai.expect;
 var _ = require('lodash');
 var request = require('request');
+var jsdom = require('jsdom');
 
 var HOST = 'localhost';
 var PORT = parseInt(process.env.PORT) || 3005;
@@ -147,7 +148,7 @@ describe('The about page',function(){
 });
 
 
-describe('The new event page',function(){
+describe('The new event creation page',function(){
   before(function(done){
     this.server = app.listen(PORT, done);
   });
@@ -175,10 +176,146 @@ describe('The new event page',function(){
     };
   });
 
+  after(function(done){
+    this.server.close(done);
+  });
+});
 
+
+describe('The form for creating new events',function(){
+  before(function(done){
+    this.server = app.listen(PORT, done);
+  });
+
+  before(function(){
+    this.url = SITE + '/events/new';
+    function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    this.getGoodData = function () {
+      return {
+        title: 'Test event' + getRandomInt(0, 10000),
+        location: 'Caseus',
+        year: 2015,
+        month: 6,
+        day: 1,
+        hour: 4,
+        minute: 30        
+      }
+    };
+  });
+
+  var cases = [
+    {
+      field: 'title',
+      desc: 'is empty',
+      type: 'input',
+      value: '',
+    },
+    {
+      field: 'title',
+      desc: 'is too long',
+      type: 'input',
+      value: '012345678901234567890123456789012345678901234567890123456789',
+    },
+    {
+      field: 'location',
+      desc: 'is empty',
+      type: 'input',
+      value: '',
+    },
+    {
+      field: 'location',
+      desc: 'is too long',
+      type: 'input',
+      value: '012345678901234567890123456789012345678901234567890123456789',
+    },
+    {
+      field: 'image',
+      desc: 'is not a URL',
+      type: 'input',
+      value: 'foo',
+    },
+    {
+      field: 'image',
+      desc: 'is not a gif or png',
+      type: 'input',
+      value: 'http://www.foo.com/woot.jpg',
+    },
+  ];
+  var rangedIntCases = [
+    {
+      field: 'year',
+      min: 2015,
+      max: 2016
+    },
+    {
+      field: 'month',
+      min: 0,
+      max: 11
+    },
+    {
+      field: 'day',
+      min: 1,
+      max: 31
+    },
+    {
+      field: 'hour',
+      min: 0,
+      max: 23
+    },
+  ];
+  for (var i = rangedIntCases.length - 1; i >= 0; i--) {
+    var ri = rangedIntCases[i];
+    cases.push({
+      field: ri.field,
+      desc: 'is less than ' + ri.min,
+      type: 'select',
+      value: ri.min - 1
+    });
+    cases.push({
+      field: ri.field,
+      desc: 'is more than ' + ri.max,
+      type: 'select',
+      value: ri.min + 1
+    });
+    cases.push({
+      field: ri.field,
+      desc: 'is not an integer',
+      type: 'select',
+      value: 'foo'
+    });
+  };
+
+  for (var i = cases.length - 1; i >= 0; i--) {
+    var thisTest = function (c) {
+      it('should display errors to the user when the ' + cases[i].field + ' ' + cases[i].desc, function(done){
+        var field2method = {
+          'input': 'fill',
+          'select': 'select'
+        }
+        var postData = {
+          url: this.url,
+          form: this.getGoodData()
+        };
+        postData.form[c.field] = c.value;
+        request.post(postData, function(err, httpResponse, body){
+          expect(err).to.be.null;
+          expect(httpResponse.statusCode).to.equal(200, "Bad form validation and response code");
+          var window = jsdom.jsdom(body).createWindow();
+          expect(window.document.getElementsByClassName('form-errors')).to.be.ok;
+          done();
+        });
+      });
+    };
+    thisTest((cases[i]));
+  };
 
 
   after(function(done){
     this.server.close(done);
   });
 });
+
+
+
