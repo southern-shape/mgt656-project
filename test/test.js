@@ -13,6 +13,7 @@ var expect = chai.expect;
 var _ = require('lodash');
 var request = require('request');
 var jsdom = require('jsdom');
+var events = require('../models/events.js');
 
 var HOST = 'localhost';
 var PORT = parseInt(process.env.PORT) || 3005;
@@ -333,4 +334,18 @@ describe('The form for creating new events',function(){
 });
 
 
+describe('The event detail pages',function(){
+  before(function(done){
+    this.server = app.listen(PORT, done);
+  });
+  it('should exist', function(done){
+    var response = request.get(SITE + '/events/0');
+    done();
+    // async.mapSeries(urls, getAboutLink, function(err, results){
+    //   expect(_.all(results)).to.be.true;
+    //   done();
+    // });
+
+  });
+});
 
