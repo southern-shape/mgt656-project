@@ -39,10 +39,11 @@ var allEvents = [
  */
 function getById (id) {
   for (var i = allEvents.length - 1; i >= 0; i--) {
-    if (id === allEvents[i]){
+    if (id === allEvents[i].id){
       return allEvents[i];
     }
   }
+  return null;
 }
 
 module.exports = exports = {
