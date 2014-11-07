@@ -23,11 +23,24 @@ Then, you'll need to install the dependencies
 
 And, finally, you can run the code
 
-	nodemon app.js
+	./node_modules/.bin/gulp
 
 That will run the [nodemon](https://github.com/remy/nodemon)
 program, which is a nice way of running node and then restarting
-it when your files change.
+it when your files change. Every time your files change, it will
+also run [http://www.jshint.com/docs/](JSHint) to check your
+JavaScript code for bad practices.
+
+## Test your code
+
+Type the following command in order to run the
+[BDD](http://en.wikipedia.org/wiki/Behavior-driven_development)
+tests.
+
+	./node_modules/.bin/mocha
+
+That will run all the tests in `test/tests.js`.
+
 
 ## What we're using
 
