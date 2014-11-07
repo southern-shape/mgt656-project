@@ -189,45 +189,29 @@ describe('The event detail pages',function(){
   });
   it('should exist for each event and should have title, image, etc', function(done){
     var fetchEventDetail = function (ev, cb) {
-      var browser = Browser();
-      console.log('bbaaaaaaa');
-      return browser.visit(SITE + '/event/' + ev.id, function(){
-        expect(browser.success).to.be.ok();
-        console.log('wooooot');
-        cb();
+      var browser = new Browser();
+      browser.visit(SITE + '/events/' + ev.id, function(){
+        cb(null, browser);
       });
     }
-    console.log(events.all);
     async.map(events.all, fetchEventDetail, function(err, results){
-      console.log(results);
+      expect(_.every(results, 'success')).to.be.ok;
+      for (var i = results.length - 1; i >= 0; i--) {
+        var b = results[i];
+        expect(b.query('#title')).to.be.ok;
+        expect(b.query('time[datetime]')).to.be.ok;
+        expect(b.query('#location')).to.be.ok;
+        expect(b.query('#image')).to.be.ok;
+      };
       done();
     });
   });
+
   after(function(done){
     this.server.close(done);
   });
 });
 
-
-describe('The event detail pages',function(){
-  before(function(done){
-    this.server = app.listen(PORT, done);
-  });
-  it('should exist for each event and should have title, image, etc', function(done){
-    var fetchEventDetail = function (ev, cb) {
-      return request.get(SITE + '/event/' + ev.id, cb);
-    }
-    console.log(events.all);
-    async.map(events.all, fetchEventDetail, function(err, results){
-      console.log(results.length);
-      // console.log(results);
-      done();
-    });
-  });
-  after(function(done){
-    this.server.close(done);
-  });
-});
 
 describe('The form for creating new events',function(){
   before(function(done){
