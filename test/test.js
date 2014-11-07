@@ -210,6 +210,20 @@ describe('The event detail pages',function(){
       done();
     });
   });
+  it('should allow users to RSVP', function(done){
+    var browser = new Browser();
+    var email = 'foobar@barbaz.com';
+
+    browser.visit(SITE + '/events/0', function(){
+      expect(browser.html()).to.not.contain(email);
+      browser
+        .fill('email', email)
+        .pressButton('Submit', function(){
+          expect(browser.html()).to.contain(email);
+          done();
+        });
+    });
+  });
 
   after(function(done){
     this.server.close(done);
