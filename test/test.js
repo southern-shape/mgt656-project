@@ -337,7 +337,7 @@ describe('The form for creating new events',function(){
   }
 
   var thisTest = function (c) {
-    it('should display errors to the user when the ' + cases[i].field + ' ' + cases[i].desc, function(done){
+    it('should display errors to the user when the ' + c.field + ' ' + c.desc, function(done){
       var field2method = {
         'input': 'fill',
         'select': 'select'
