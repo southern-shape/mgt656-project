@@ -27,7 +27,7 @@ var allowedDateInfo = {
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
     12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23
   ]
-}
+};
 
 /**
  * Controller that renders a list of events in HTML.
@@ -58,7 +58,7 @@ function saveEvent(request, response){
   var contextData = {errors: []};
 
   if (validator.isLength(request.body.title, 5, 50) === false) {
-    contextData.errors = ['Your title should be between 5 and 100 letters.'];
+    contextData.errors.push('Your title should be between 5 and 100 letters.');
   }
 
 
@@ -77,6 +77,30 @@ function saveEvent(request, response){
   }
 }
 
+function eventDetail (request, response, next) {
+  var ev = events.getById(parseInt(request.params.id));
+  if (ev === null) {
+    next();
+  }
+  response.render('event-detail.html', {event: ev});
+}
+
+function rsvp (request, response, next){
+  var ev = events.getById(parseInt(request.params.id));
+
+  if (ev === null) {
+    next();
+  }
+  if(validator.isEmail(request.body.email)){
+    ev.attending.push(request.body.email);
+    response.redirect('/events/' + ev.id);
+  }else{
+    var contextData = {errors: [], event: ev};
+    contextData.errors.push('Invalid email');
+    response.render('event-detail.html', contextData);    
+  }
+
+}
 
 /**
  * Export all our functions (controllers in this case, because they
@@ -84,7 +108,8 @@ function saveEvent(request, response){
  */
 module.exports = {
   'listEvents': listEvents,
-  'eventDetail': null,
+  'eventDetail': eventDetail,
   'newEvent': newEvent,
-  'saveEvent': saveEvent
+  'saveEvent': saveEvent,
+  'rsvp': rsvp
 };

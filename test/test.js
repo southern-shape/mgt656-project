@@ -101,7 +101,7 @@ describe('The API',function(){
       expect(data).to.have.key('events');
       expect(data.events).to.be.a('Array');
       done();
-    })
+    });
   });
 
   it('should allow for searching events by title', function(done){
@@ -111,9 +111,9 @@ describe('The API',function(){
       var data = JSON.parse(body);
       for (var i = data.events.length - 1; i >= 0; i--) {
         expect(data.events[i].title.indexOf(search)).is.above(-1);
-      };
+      }
       done();
-    })
+    });
   });
 
   after(function(done){
@@ -149,6 +149,55 @@ describe('The about page',function(){
 });
 
 
+describe('The event detail pages',function(){
+  before(function(done){
+    this.server = app.listen(PORT, done);
+  });
+  it('should exist for each event and should have title, image, etc', function(done){
+    var fetchEventDetail = function (ev, cb) {
+      var browser = new Browser();
+      browser.visit(SITE + '/events/' + ev.id, function(){
+        cb(null, browser);
+      });
+    };
+    async.map(events.all, fetchEventDetail, function(err, results){
+      expect(_.every(results, 'success')).to.be.ok;
+      for (var i = results.length - 1; i >= 0; i--) {
+        var b = results[i];
+        expect(b.query('#title')).to.be.ok;
+        expect(b.query('time[datetime]')).to.be.ok;
+        expect(b.query('#location')).to.be.ok;
+        expect(b.query('#image')).to.be.ok;
+        for (var j = events.attending.length - 1; j >= 0; j--) {
+          var email = events.attending[j];
+          expect(b.html()).to.contain(email);
+        }
+      }
+      done();
+    });
+  });
+
+  it('should allow users to RSVP', function(done){
+    var browser = new Browser();
+    var email = 'foobar@barbaz.com';
+
+    browser.visit(SITE + '/events/0', function(){
+      expect(browser.html()).to.not.contain(email);
+      browser
+        .fill('email', email)
+        .pressButton('Submit', function(){
+          expect(browser.html()).to.contain(email);
+          done();
+        });
+    });
+  });
+
+  after(function(done){
+    this.server.close(done);
+  });
+});
+
+
 describe('The new event creation page',function(){
   before(function(done){
     this.server = app.listen(PORT, done);
@@ -174,62 +223,13 @@ describe('The new event creation page',function(){
       expect(this.browser.query('[for="' + requiredFields[i] + '"]')).to.be.ok;
       // Test for form fields
       expect(this.browser.query('[name="' + requiredFields[i] + '"]')).to.be.ok;
-    };
-  });
-
-  after(function(done){
-    this.server.close(done);
-  });
-});
-
-
-describe('The event detail pages',function(){
-  before(function(done){
-    this.server = app.listen(PORT, done);
-  });
-  it('should exist for each event and should have title, image, etc', function(done){
-    var fetchEventDetail = function (ev, cb) {
-      var browser = new Browser();
-      browser.visit(SITE + '/events/' + ev.id, function(){
-        cb(null, browser);
-      });
     }
-    async.map(events.all, fetchEventDetail, function(err, results){
-      expect(_.every(results, 'success')).to.be.ok;
-      for (var i = results.length - 1; i >= 0; i--) {
-        var b = results[i];
-        expect(b.query('#title')).to.be.ok;
-        expect(b.query('time[datetime]')).to.be.ok;
-        expect(b.query('#location')).to.be.ok;
-        expect(b.query('#image')).to.be.ok;
-        for (var j = events.attending.length - 1; j >= 0; j--) {
-          var email = events.attending[j];
-          expect(b.html()).to.contain(email);
-        };
-      };
-      done();
-    });
-  });
-  it('should allow users to RSVP', function(done){
-    var browser = new Browser();
-    var email = 'foobar@barbaz.com';
-
-    browser.visit(SITE + '/events/0', function(){
-      expect(browser.html()).to.not.contain(email);
-      browser
-        .fill('email', email)
-        .pressButton('Submit', function(){
-          expect(browser.html()).to.contain(email);
-          done();
-        });
-    });
   });
 
   after(function(done){
     this.server.close(done);
   });
 });
-
 
 describe('The form for creating new events',function(){
   before(function(done){
@@ -250,7 +250,7 @@ describe('The form for creating new events',function(){
         day: 1,
         hour: 4,
         minute: 30        
-      }
+      };
     };
   });
 
@@ -334,31 +334,31 @@ describe('The form for creating new events',function(){
       type: 'select',
       value: 'foo'
     });
-  };
+  }
 
-  for (var i = cases.length - 1; i >= 0; i--) {
-    var thisTest = function (c) {
-      it('should display errors to the user when the ' + cases[i].field + ' ' + cases[i].desc, function(done){
-        var field2method = {
-          'input': 'fill',
-          'select': 'select'
-        }
-        var postData = {
-          url: this.url,
-          form: this.getGoodData()
-        };
-        postData.form[c.field] = c.value;
-        request.post(postData, function(err, httpResponse, body){
-          expect(err).to.be.null;
-          expect(httpResponse.statusCode).to.equal(200, "Bad form validation and response code");
-          var window = jsdom.jsdom(body).createWindow();
-          expect(window.document.getElementsByClassName('form-errors')).to.be.ok;
-          done();
-        });
+  var thisTest = function (c) {
+    it('should display errors to the user when the ' + cases[i].field + ' ' + cases[i].desc, function(done){
+      var field2method = {
+        'input': 'fill',
+        'select': 'select'
+      };
+      var postData = {
+        url: this.url,
+        form: this.getGoodData()
+      };
+      postData.form[c.field] = c.value;
+      request.post(postData, function(err, httpResponse, body){
+        expect(err).to.be.null;
+        expect(httpResponse.statusCode).to.equal(200, 'Bad form validation and response code');
+        var window = jsdom.jsdom(body).createWindow();
+        expect(window.document.getElementsByClassName('form-errors')).to.be.ok;
+        done();
       });
-    };
-    thisTest((cases[i]));
+    });
   };
+  for (var j = cases.length - 1; j >= 0; j--) {
+    thisTest((cases[j]));
+  }
 
   it('should redirect the user to the event detail page if the form is valid', function(done){
     var postData = {
@@ -367,9 +367,9 @@ describe('The form for creating new events',function(){
     };
     request.post(postData, function(err, httpResponse, body){
       expect(err).to.be.null;
-      expect(httpResponse.statusCode).to.equal(302, "Bad response code");
+      expect(httpResponse.statusCode).to.equal(302, 'Bad response code');
       expect(httpResponse.headers).to.contain.key('location');
-      expect(httpResponse.headers.location).to.match(/events\/\d+\/?$/, "Bad redirect location, it should look like events/4, events/5, etc");
+      expect(httpResponse.headers.location).to.match(/events\/\d+\/?$/, 'Bad redirect location, it should look like events/4, events/5, etc');
       done();
     });
 
