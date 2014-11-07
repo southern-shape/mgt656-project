@@ -202,6 +202,10 @@ describe('The event detail pages',function(){
         expect(b.query('time[datetime]')).to.be.ok;
         expect(b.query('#location')).to.be.ok;
         expect(b.query('#image')).to.be.ok;
+        for (var j = events.attending.length - 1; j >= 0; j--) {
+          var email = events.attending[j];
+          expect(b.html()).to.contain(email);
+        };
       };
       done();
     });
