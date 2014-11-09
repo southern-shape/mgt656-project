@@ -19,7 +19,51 @@ var HOST = 'localhost';
 var PORT = parseInt(process.env.PORT) || 3005;
 var SITE = 'http://' + HOST + ':' + PORT;
 
+describe('The site, on all pages',function(){
+  before(function(done){
+    this.port = PORT;
+    this.server = app.listen(this.port, done);
+    var testedUrls = ['/', '/about', '/events/new', '/events/0', '/events/1', '/events/2'];
 
+    // Runs a `testFunc` against a `url`. `testFunc`
+    // should take a zombie browser as its sole parameter. 
+    var createPageTestFunction = function(testFunc) {
+      return function(url, callback){
+        var browser = new Browser({site: SITE});
+        browser.visit(url, function(){
+          if (!browser.success) {
+            return callback(null, true);
+          }
+          // expect(browser.query('footer a[href="/about"]')).to.be.ok
+          return callback(null, testFunc(browser)); 
+        });        
+      };
+    };
+
+    // `testFunc` should take the a URL
+    this.testPages = function(testFunc, done){
+      async.mapSeries(testedUrls, createPageTestFunction(testFunc), done);
+    };
+
+    this.queryIsOk = function(selector, message){
+      return function(browser){
+        assert.ok(browser.query(selector), message + ' on page at ' + browser.location.pathname);
+      }
+    };
+  });
+
+  it('should have a link to /about in the footer', function(done){
+    this.testPages(this.queryIsOk('footer a[href="/about"]', 'Expected link to /about'), done);
+  });
+
+  it('should have a link to / in the footer', function(done){
+    this.testPages(this.queryIsOk('footer a[href="/"]', 'Expected link to /'), done);
+  });
+
+  after(function(done){
+    this.server.close(done);
+  });
+});
 
 describe('The home page',function(){
   before(function(done){
@@ -43,24 +87,6 @@ describe('The home page',function(){
   it('should have a link to create a new event', function(){
     expect(this.browser.query('a#new[href*="/events/new"]')).to.be.ok;
   });
-
-  it('should have a link to the about page in the footer of all pages that exist', function(done){
-    var browser = this.browser;
-    function getAboutLink (url, callback) {
-      browser.visit(url, function(){
-        if (!browser.success) {
-          return callback(null, true);
-        }
-        return callback(null, expect(browser.query('footer a[href="/about"]')).to.be.ok); 
-      });
-    }
-    var urls = ['/', '/about', '/events/new', '/events/0', '/events/1', '/events/2'];
-    async.mapSeries(urls, getAboutLink, function(err, results){
-      expect(_.all(results)).to.be.true;
-      done();
-    });
-  });
-
 
   it('should have your team logo', function(){
     expect(this.browser.query('img#logo[src*=".png"]')).to.be.ok;
