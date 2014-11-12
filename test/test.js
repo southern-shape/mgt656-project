@@ -77,35 +77,35 @@ describe('The home page',function(){
   });
 
   it('should be up and running', function(){
-    expect(this.browser.success).to.be.ok;
+    assert.ok(this.browser.success, 'Home page not found at ' + this.browser.location.pathname);
   });
 
   it('should include bootstrap css', function(){
-    expect(this.browser.query('link[href*="bootstrap.css"]')).to.be.ok;
+    assert.ok(this.browser.query('link[href*="bootstrap"]'), 'Expected bootstrap.css on page at ' + this.browser.location.pathname);
   });
 
   it('should have a link to create a new event', function(){
-    expect(this.browser.query('a#new[href*="/events/new"]')).to.be.ok;
+    assert.ok(this.browser.query('a#new[href*="/events/new"]'), 'Expected new event link on page at ' + this.browser.location.pathname);
   });
 
   it('should have your team logo', function(){
-    expect(this.browser.query('img#logo[src*=".png"]')).to.be.ok;
+    assert.ok(this.browser.query('img#logo[src*=".png"]'), 'Expected logo .png on page at ' + this.browser.location.pathname);
   });
 
   it('should have a list of events', function(){
-    expect(this.browser.query('li.event[id*="event-"]')).to.be.ok;
+    assert.ok(this.browser.query('li.event[id*="event-"]'), 'Expected list (li) of events on page at ' + this.browser.location.pathname);
   });
 
   it('should have a time tag for each event', function(){
     var numEvents = this.browser.queryAll('li.event[id*="event-"]').length;
     var numEventsWithTime = this.browser.queryAll('li.event[id*="event-"] time[datetime]').length;
-    expect(numEvents).to.equal(numEventsWithTime).and.to.be.above(0);
+    assert.ok(numEvents === numEventsWithTime && numEvents > 0, 'Expected ' + (numEvents > 0 ? numEvents : 'some')  + ' events with time tags at ' + this.browser.location.pathname + ' (found ' + numEventsWithTime + ')');
   });
 
   it('should have a link for each event', function(){
     var numEvents = this.browser.queryAll('li.event[id*="event-"]').length;
     var numEventsWithLinks = this.browser.queryAll('li.event[id*="event-"] a[href^="/events/"]').length;
-    expect(numEvents).to.equal(numEventsWithLinks).and.to.be.above(0);
+    assert.ok(numEvents === numEventsWithLinks && numEvents > 0, 'Expected ' + (numEvents > 0 ? numEvents : 'some')  + ' events with links at ' + this.browser.location.pathname + ' (found ' + numEventsWithLinks + ')');
   });
   
   after(function(done){
@@ -122,10 +122,12 @@ describe('The API',function(){
 
   it('should return an array of upcoming events in JSON format', function(done){
     request(this.url, function (error, response, body) {
-      expect(error).is.null;
+      assert.ok(error === null, 'Encountered error: ' + error + ' with JSON API at /api/events.');
+      assert.ok(body !== 'null', 'JSON data has no contents.');
+      assert.ok(response.statusCode !== 404, 'API not found at /api/events');
       var data = JSON.parse(body);
-      expect(data).to.have.key('events');
-      expect(data.events).to.be.a('Array');
+      assert.ok(data.hasOwnProperty('events'), 'JSON should have an events key.');
+      assert.ok(data.events instanceof Array, 'Events JSON values should be an array.');
       done();
     });
   });
@@ -134,10 +136,15 @@ describe('The API',function(){
     var search = 'BBQ';
     var url = this.url + '?search=' + search;
     request(url, function (error, response, body) {
+      assert.ok(response.statusCode !== 404, 'API not found at /api/events');
       var data = JSON.parse(body);
+      assert.ok(data.events !== undefined, 'JSON should have at least one event.');
+      // Search for ANY event with title = search
+      var titleFound = -1;
       for (var i = data.events.length - 1; i >= 0; i--) {
-        expect(data.events[i].title.indexOf(search)).is.above(-1);
+        data.events[i].title.indexOf(search) > titleFound ? titleFound = data.events[i].title.indexOf(search) : null;
       }
+      assert.ok(titleFound > -1, 'Could not find title: ' + search + ' in events.');
       done();
     });
   });
@@ -159,13 +166,13 @@ describe('The about page',function(){
   });
 
   it('should have people on it', function(){
-    expect(this.browser.query('span[id$="-name"]')).to.be.ok;
+    assert.ok(this.browser.query('span[id$="-name"]'), 'Expected spans with name-based ids on page at ' + this.browser.location.pathname);
   });
 
   it('should have a picture of each person', function(){
-    var numPeople = this.browser.query('span[id$="-name"]').length;
-    var numImages = this.browser.query('img[id$="-headshot"]').length;
-    expect(numPeople).to.equal(numImages);
+    var numPeople = this.browser.queryAll('span[id$="-name"]').length;
+    var numImages = this.browser.queryAll('img[id$="-headshot"]').length;
+    assert.ok(numPeople === numImages && numPeople > 0, 'Found ' + numPeople + ' people and ' + numImages + ' images.');
   });
 
 
@@ -187,16 +194,17 @@ describe('The event detail pages',function(){
       });
     };
     async.map(events.all, fetchEventDetail, function(err, results){
-      expect(_.every(results, 'success')).to.be.ok;
+      assert.ok(_.every(results, 'success'), 'Couldn\'t retreive all events at /events/:id.');
       for (var i = results.length - 1; i >= 0; i--) {
         var b = results[i];
-        expect(b.query('#title')).to.be.ok;
-        expect(b.query('time[datetime]')).to.be.ok;
-        expect(b.query('#location')).to.be.ok;
-        expect(b.query('#image')).to.be.ok;
-        for (var j = events.attending.length - 1; j >= 0; j--) {
-          var email = events.attending[j];
-          expect(b.html()).to.contain(email);
+        assert.ok(b.query('#title'), 'No title for event '  + i);
+        assert.ok(b.query('#date'), 'No date for event '  + i);
+        assert.ok(b.query('#location'), 'No location for event '  + i);
+        assert.ok(b.query('#image'), 'No image for event '  + i);
+
+        for (var j = results[i].attending.length - 1; j >= 0; j--) {
+          var email = results[i].attending[j];
+          assert.ok(b.html().indexOf(email) > -1, 'Could not find email: ' + email + ' for event '  + i);
         }
       }
       done();
@@ -208,11 +216,11 @@ describe('The event detail pages',function(){
     var email = 'foobar@barbaz.com';
 
     browser.visit(SITE + '/events/0', function(){
-      expect(browser.html()).to.not.contain(email);
+      assert.ok(browser.html().indexOf(email) === -1, 'Email ' + email + ' found before filling form at /events/0.');
       browser
         .fill('email', email)
         .pressButton('Submit', function(){
-          expect(browser.html()).to.contain(email);
+          assert.ok(browser.html().indexOf(email) > -1, 'Email ' + email + ' not successfully RSVP\'d.');
           done();
         });
     });
@@ -235,20 +243,20 @@ describe('The new event creation page',function(){
   });
 
   it('should exist', function(){
-    expect(this.browser.success).to.be.ok;
+    assert.ok(this.browser.success, 'No page found at /events/new');
   });
 
   it('should have a form that can be posted back', function(){
-    expect(this.browser.query('form[method="POST"]')).to.be.ok;
+    assert.ok(this.browser.query('form[method="POST"]'), 'Missing form with post method at ' + this.browser.location.pathname);
   });
 
   it('should have appropriate form fields and labels', function(){
     var requiredFields = ['title', 'location', 'image', 'year', 'month', 'day', 'hour', 'minute'];
     for (var i = requiredFields.length - 1; i >= 0; i--) {
       // Test for labels
-      expect(this.browser.query('[for="' + requiredFields[i] + '"]')).to.be.ok;
+      assert.ok(this.browser.query('[for="' + requiredFields[i] + '"]'), 'Should have form label for ' + requiredFields[i] + ' at ' + this.browser.location.pathname);
       // Test for form fields
-      expect(this.browser.query('[name="' + requiredFields[i] + '"]')).to.be.ok;
+      assert.ok(this.browser.query('[name="' + requiredFields[i] + '"]'), 'Should have form name for ' + requiredFields[i] + ' at ' + this.browser.location.pathname);
     }
   });
 
@@ -374,10 +382,10 @@ describe('The form for creating new events',function(){
       };
       postData.form[c.field] = c.value;
       request.post(postData, function(err, httpResponse, body){
-        expect(err).to.be.null;
-        expect(httpResponse.statusCode).to.equal(200, 'Bad form validation and response code');
+        assert.ok(err === null, 'Error: ' + err);
+        assert.ok(httpResponse.statusCode === 200, 'Expected error code 200.');
         var window = jsdom.jsdom(body).createWindow();
-        expect(window.document.getElementsByClassName('form-errors')).to.be.ok;
+        assert.ok(window.document.getElementsByClassName('form-errors'), 'Error page should contain form errors.');
         done();
       });
     });
@@ -392,9 +400,9 @@ describe('The form for creating new events',function(){
       form: this.getGoodData()
     };
     request.post(postData, function(err, httpResponse, body){
-      expect(err).to.be.null;
-      expect(httpResponse.statusCode).to.equal(302, 'Bad response code');
-      expect(httpResponse.headers).to.contain.key('location');
+      assert.ok(err === null, 'Error: ' + err);
+      assert.ok(httpResponse.statusCode === 302, 'Expected error code 302.');
+      assert.ok(httpResponse.headers.hasOwnProperty('location'), 'http response header should include location.');
       expect(httpResponse.headers.location).to.match(/events\/\d+\/?$/, 'Bad redirect location, it should look like events/4, events/5, etc');
       done();
     });
