@@ -211,9 +211,9 @@ describe('The event detail pages',function(){
     });
   });
 
-  it('should allow users to RSVP', function(done){
+  it('should allow Yale users to RSVP', function(done){
     var browser = new Browser();
-    var email = 'foobar@barbaz.com';
+    var email = 'foobar@YAle.edu';
 
     browser.visit(SITE + '/events/0', function(){
       assert.ok(browser.html().indexOf(email) === -1, 'Email ' + email + ' found before filling form at /events/0.');
@@ -225,6 +225,21 @@ describe('The event detail pages',function(){
         });
     });
   });
+
+  it('should reject RSVPs from Yale addresses', function(done){
+    var browser = new Browser();
+    var email = 'foobar@harvard.edu';
+
+    browser.visit(SITE + '/events/0', function(){
+      browser
+        .fill('email', email)
+        .pressButton('Submit', function(){
+          assert.ok(browser.query('ul.form-errors'), 'RSVP from joker at Harvard should have been rejected.');
+          done();
+        });
+    });
+  });
+
 
   after(function(done){
     this.server.close(done);
