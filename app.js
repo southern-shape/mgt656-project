@@ -1,48 +1,20 @@
 'use strict';
 
-// Import our requirements
+// Import our express and our configuration
 var express = require('express');
-var path = require('path');
-var logger = require('morgan');
-var nunjucks = require('nunjucks');
-var bodyParser = require('body-parser');
-var strftime = require('strftime');
+var configure = require('./config.js');
+
+// Import our controllers
+var indexControllers = require('./controllers/index.js');
+var aboutControllers = require('./controllers/about.js');
+var eventControllers = require('./controllers/events.js');
+
 
 // Create our express app
 var app = express();
 
-//------------- App configuration
-
-// Configure our templating engine: nunjucks
-nunjucks.configure('views', {
-    autoescape: true,
-    express: app
-}).addFilter('prettyDate', function(dateObject) {
-    return strftime('%A, %b. %e at %l:%M%P', dateObject);
-});
-
-// Use 'development' level of logging, ie. verbose
-if (process.env.NODE_ENV !== 'testing') {
-  app.use(logger('dev'));
-}
-
-// Serve images, css, and client-side js about of the
-// directory named 'public'
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Parse the body of incoming requests by default.
-// This means we can access the parameters of submitted
-// forms and such.
-app.use(bodyParser.urlencoded({extended: true}));
-
-
-//------------- Adding routes to controllers
-
-
-// Import our controllers
-var indexControllers = require('./controllers/index');
-var aboutControllers = require('./controllers/about');
-var eventControllers = require('./controllers/events');
+// Configure it
+configure(app);
 
 // Add routes mapping URLs to controllers
 app.get('/', indexControllers.index);
