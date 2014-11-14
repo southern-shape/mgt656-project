@@ -145,9 +145,8 @@ describe('The API',function(){
       var data = JSON.parse(body);
       assert.ok(data.events !== undefined, 'JSON should have at least one event.');
       // Search for ANY event with title = search
-      var titleFound = -1;
       for (var i = data.events.length - 1; i >= 0; i--) {
-        data.events[i].title.indexOf(search) > titleFound ? titleFound = data.events[i].title.indexOf(search) : null;
+        assert.ok(data.events[i].title.indexOf(search) > -1, 'Expected to find ' + search + ' in title.');
       }
       assert.ok(titleFound > -1, 'Could not find title: ' + search + ' in events.');
       done();
@@ -202,15 +201,11 @@ describe('The event detail pages',function(){
       assert.ok(_.every(results, 'success'), 'Couldn\'t retreive all events at /events/:id.');
       for (var i = results.length - 1; i >= 0; i--) {
         var b = results[i];
-        assert.ok(b.query('#title'), 'No title for event '  + i);
-        assert.ok(b.query('#date'), 'No date for event '  + i);
-        assert.ok(b.query('#location'), 'No location for event '  + i);
-        assert.ok(b.query('#image'), 'No image for event '  + i);
-
-        for (var j = results[i].attending.length - 1; j >= 0; j--) {
-          var email = results[i].attending[j];
-          assert.ok(b.html().indexOf(email) > -1, 'Could not find email: ' + email + ' for event '  + i);
-        }
+        assert.ok(b.query('h1#title'), 'No title for event '  + i);
+        assert.ok(b.query('span#date'), 'No date for event '  + i);
+        assert.ok(b.query('span#location'), 'No location for event '  + i);
+        assert.ok(b.query('img#image'), 'No image for event '  + i);
+        assert.ok(b.query('ul#attendees'), 'No attendees for event '  + i);
       }
       done();
     });
@@ -388,8 +383,8 @@ describe('The form for creating new events',function(){
       postData.form[c.field] = c.value;
       request.post(postData, function(err, httpResponse, body){
         assert.ok(err === null, 'Error: ' + err);
-        assert.ok(httpResponse.statusCode === 200, 'Expected error code 200.');
-        var window = jsdom.jsdom(body).createWindow();
+        assert.ok(httpResponse.statusCode === 200, 'Expected status code 200.');
+        var window = jsdom.jsdom(body).parentWindow;
         assert.ok(window.document.getElementsByClassName('form-errors'), 'Error page should contain form errors.');
         done();
       });
