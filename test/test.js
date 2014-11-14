@@ -52,6 +52,10 @@ describe('The site, on all pages',function(){
     };
   });
 
+  it('should be using Boostrap CSS', function(done){
+    this.testPages(this.queryIsOk('head link[href*="bootstrap"]', 'Expected Bootstrap CSS'), done);
+  });
+
   it('should have a link to /about in the footer', function(done){
     this.testPages(this.queryIsOk('footer a[href="/about"]', 'Expected link to /about'), done);
   });
@@ -80,14 +84,6 @@ describe('The home page',function(){
     assert.ok(this.browser.success, 'Home page not found at ' + this.browser.location.pathname);
   });
 
-  it('should include bootstrap css', function(){
-    assert.ok(this.browser.query('link[href*="bootstrap"]'), 'Expected bootstrap.css on page at ' + this.browser.location.pathname);
-  });
-
-  it('should have a link to create a new event', function(){
-    assert.ok(this.browser.query('a#new[href*="/events/new"]'), 'Expected new event link on page at ' + this.browser.location.pathname);
-  });
-
   it('should have your team logo', function(){
     assert.ok(this.browser.query('img#logo[src*=".png"]'), 'Expected logo .png on page at ' + this.browser.location.pathname);
   });
@@ -104,10 +100,19 @@ describe('The home page',function(){
 
   it('should have a link for each event', function(){
     var numEvents = this.browser.queryAll('li.event[id*="event-"]').length;
-    var numEventsWithLinks = this.browser.queryAll('li.event[id*="event-"] a[href^="/events/"]').length;
+    var numEventsWithLinks = this.browser.queryAll('li.event[id^="event-"] a[href^="/events/"]').length;
     assert.ok(numEvents === numEventsWithLinks && numEvents > 0, 'Expected ' + (numEvents > 0 ? numEvents : 'some')  + ' events with links at ' + this.browser.location.pathname + ' (found ' + numEventsWithLinks + ')');
   });
   
+  it('should not show events that are over', function(){
+    // Event #4 is in the default data and has a date in the past
+    assert.notOk(this.browser.query('li.event[id$="event-4"]'), 'Expected to not see events in the past ' + this.browser.location.pathname);
+  });
+
+  it('should have a link to create a new event', function(){
+    assert.ok(this.browser.query('a#new[href="/events/new"]'), 'Expected new event link on page at ' + this.browser.location.pathname);
+  });
+
   after(function(done){
     this.server.close(done);
   });
