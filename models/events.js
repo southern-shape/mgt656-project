@@ -30,6 +30,14 @@ var allEvents = [
     image: 'http://i.imgur.com/CJLrRqh.gif',
     location: 'Barry Nalebuff\'s house',
     attending: ['kim.kardashian@yale.edu'],
+  },
+  {
+    id: 4,
+    title: 'Cooking lessons for the busy business student',
+    date:   new Date(2014, 8, 2, 19, 0, 0),
+    image: 'http://i.imgur.com/02KT9.gif',
+    location: 'Yale Farm',
+    attending: ['homer.simpson@yale.edu'],
   }
 ];
 
