@@ -170,14 +170,17 @@ describe('The about page',function(){
   });
 
   it('should have people on it', function(){
-    assert.ok(this.browser.query('span[id$="-name"]'), 'Expected spans with name-based ids on page at ' + this.browser.location.pathname);
+      var numPeople = this.browser.queryAll('span[id$="-team"]').length;
+      assert.ok(numPeople > 0, "Found 0 team members.");
   });
 
+  //Check that number of people = number of headshot
   it('should have a picture of each person', function(){
-    var numPeople = this.browser.queryAll('span[id$="-name"]').length;
+    var numPeople = this.browser.queryAll('span[id$="-team"]').length;
     var numImages = this.browser.queryAll('img[id$="-headshot"]').length;
-    assert.ok(numPeople === numImages && numPeople > 0, 'Found ' + numPeople + ' people and ' + numImages + ' images.');
+    assert.ok( numPeople == numImages && numPeople > 0, 'Found ' + numPeople + ' people and ' + numImages + ' images.');    
   });
+
 
 
   after(function(done){
@@ -262,16 +265,29 @@ describe('The new event creation page',function(){
   });
 
   it('should have a form that can be posted back', function(){
+    //todo - should make sure there's only one form
     assert.ok(this.browser.query('form[method="POST"]'), 'Missing form with post method at ' + this.browser.location.pathname);
   });
 
   it('should have appropriate form fields and labels', function(){
-    var requiredFields = ['title', 'location', 'image', 'year', 'month', 'day', 'hour', 'minute'];
+    var requiredFields = ['title', 'location', 'image', 'date', 'hour', 'minute'];
+
     for (var i = requiredFields.length - 1; i >= 0; i--) {
+      //todo - should make sure there's only one of these fields
       // Test for labels
       assert.ok(this.browser.query('[for="' + requiredFields[i] + '"]'), 'Should have form label for ' + requiredFields[i] + ' at ' + this.browser.location.pathname);
       // Test for form fields
-      assert.ok(this.browser.query('[name="' + requiredFields[i] + '"]'), 'Should have form name for ' + requiredFields[i] + ' at ' + this.browser.location.pathname);
+      var field = this.browser.query('[name="' + requiredFields[i] + '"]');
+      assert.ok(field, 'Should have form name for ' + requiredFields[i] + ' at ' + this.browser.location.pathname);
+      if(requiredFields[i] == "date"){
+          assert.ok(field.type == "date", 'Date should be date type for ' + requiredFields[i] + ' at ' + this.browser.location.pathname);
+      }
+      else if(requiredFields[i] == "hour"){
+          assert.ok(field.type == "number" && field.attributes.getNamedItem("min").value == "0" && field.attributes.getNamedItem("max").value == "23", 'Hour should have range 0-23 at ' + this.browser.location.pathname);
+      }
+      else if(requiredFields[i] == "minute"){
+          assert.ok(field.type == "number" && field.attributes.getNamedItem("min").value == "0" && field.attributes.getNamedItem("max").value == "30", 'Minute have be either 0 or 30 at ' + this.browser.location.pathname);
+      }
     }
   });
 
