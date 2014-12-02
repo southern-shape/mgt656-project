@@ -310,11 +310,9 @@ describe('The form for creating new events',function(){
       return {
         title: 'Test event' + getRandomInt(0, 10000),
         location: 'Caseus',
-        year: 2015,
-        month: 6,
-        day: 1,
+        date: "2015-06-01",
         hour: 4,
-        minute: 30        
+        minute: 30   
       };
     };
   });
@@ -359,19 +357,9 @@ describe('The form for creating new events',function(){
   ];
   var rangedIntCases = [
     {
-      field: 'year',
-      min: 2015,
-      max: 2016
-    },
-    {
-      field: 'month',
-      min: 1,
-      max: 12
-    },
-    {
-      field: 'day',
-      min: 1,
-      max: 31
+      field: 'date',
+      min: "2015-01-01",
+      max: "2016-12-31"
     },
     {
       field: 'hour',
@@ -402,7 +390,8 @@ describe('The form for creating new events',function(){
   }
 
   var thisTest = function (c) {
-    it('should display errors to the user when the ' + c.field + ' ' + c.desc, function(done){
+    //console.log(c.field + ", " + c.desc + ", " + c.value);
+      it('should display errors to the user when the ' + c.field + ' ' + c.desc, function(done){
       var field2method = {
         'input': 'fill',
         'select': 'select'
@@ -416,6 +405,8 @@ describe('The form for creating new events',function(){
         assert.ok(err === null, 'Error: ' + err);
         assert.ok(httpResponse.statusCode === 200, 'Expected status code 200.');
         var window = jsdom.jsdom(body).parentWindow;
+        //console.log("got here: " + err + " http " + httpResponse.statusCode);
+        //console.log("what is this" + window.document.getElementsByClassName('form-errors').toString());
         assert.ok(window.document.getElementsByClassName('form-errors'), 'Error page should contain form errors.');
         done();
       });
