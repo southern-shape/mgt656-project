@@ -10,13 +10,17 @@ var nodemon = require('gulp-nodemon');
 var jshint = require('gulp-jshint');
 
 gulp.task('lint', function () {
-  gulp.src(['./**/*.js', '!./node_modules/**'])
+  gulp.src(['*.js', 'controllers/**/*.js', 'models/**/*.js', '!./node_modules/**', '!./.*'])
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'));
 });
 
 gulp.task('default', function () {
-  nodemon({ script: 'start-app.js', ext: 'html js'})
+  nodemon({
+      script: 'start-app.js',
+      ext: 'js html',
+      ignore: ['node_modules/**', '.c9/*']
+    })
     .on('change', ['lint'])
     .on('restart', function () {
       console.log('restarted!');
