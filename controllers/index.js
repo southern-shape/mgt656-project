@@ -5,7 +5,7 @@
  */
 function index (request, response) {
   var contextData = {
-    'title': 'MGT 645',
+    'title': 'MGT 656',
     'tagline': 'You are doomed (just kidding).'
   };
   response.render('index.html', contextData);
