@@ -13,13 +13,32 @@ var expect = chai.expect;
 var _ = require('lodash');
 var request = require('request');
 var jsdom = require('jsdom');
-var events = require('../models/events.js');
 
-var HOST = 'localhost';
-var PORT = parseInt(process.env.PORT) || 3005;
-var SITE = 'http://' + HOST + ':' + PORT;
+var HOST;
+var PORT;
+var SITE;
+
+function setSite (testBlock) {
+  // Do this once to set up HOST, PORT, SITE correctly
+  // so that we can run mocha programmatically and pass
+  // in these parameters. This is ghetto hack by Jensen
+  // so that we can grade student projects using this
+  // same code. In the course code, we'll have to set
+  // mocha.ctx, which is the `parent` here.
+  HOST = testBlock.parent.ctx.HOST || process.env.HOST || 'localhost';
+  if (testBlock.parent.ctx.PORT === '') {
+    PORT = '';
+  }else{
+    PORT = testBlock.parent.ctx.PORT || parseInt(process.env.PORT) || 3005;
+  };
+  SITE = 'http://' + HOST + ':' + PORT;
+}
 
 describe('The site, on all pages',function(){
+
+  // See note above. Ghetto hack.
+  setSite(this);
+
   before(function(done){
     this.port = PORT;
     this.server = app.listen(this.port, done);
