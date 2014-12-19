@@ -75,6 +75,14 @@ describe('The site, on all pages',function(){
     this.testPages(this.queryIsOk('head link[href*="bootstrap"]', 'Expected Bootstrap CSS'), done);
   });
 
+  it('should have a header element', function(done){
+    this.testPages(this.queryIsOk('header', 'Expected to find a header element'), done);
+  });
+
+  it('should have a footer element', function(done){
+    this.testPages(this.queryIsOk('footer', 'Expected to find a footer element'), done);
+  });
+
   it('should have a link to /about in the footer', function(done){
     this.testPages(this.queryIsOk('footer a[href="/about"]', 'Expected link to /about'), done);
   });
