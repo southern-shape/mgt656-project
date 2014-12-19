@@ -29,7 +29,7 @@ function setSite (testBlock) {
   if (testBlock.parent.ctx.PORT === '') {
     PORT = '';
   }else{
-    PORT = testBlock.parent.ctx.PORT || parseInt(process.env.PORT) || 3005;
+    PORT = testBlock.parent.ctx.PORT || 3005;
   };
   SITE = 'http://' + HOST + ':' + PORT;
 }
