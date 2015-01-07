@@ -18,6 +18,8 @@ var HOST;
 var PORT;
 var SITE;
 
+var testedEventUrls = ['/events/0', '/events/1', '/events/2'];
+
 function setSite (testBlock) {
   // Do this once to set up HOST, PORT, SITE correctly
   // so that we can run mocha programmatically and pass
@@ -42,7 +44,7 @@ describe('The site, on all pages',function(){
   before(function(done){
     this.port = PORT;
     this.server = app.listen(this.port, done);
-    var testedUrls = ['/', '/about', '/events/new', '/events/0', '/events/1', '/events/2'];
+    var testedUrls = _.union(['/', '/about', '/events/new'], testedEventUrls);
 
     // Runs a `testFunc` against a `url`. `testFunc`
     // should take a zombie browser as its sole parameter. 
@@ -220,13 +222,13 @@ describe('The event detail pages',function(){
     this.server = app.listen(PORT, done);
   });
   it('should exist for each event and should have title, image, etc', function(done){
-    var fetchEventDetail = function (ev, cb) {
-      var browser = new Browser();
-      browser.visit(SITE + '/events/' + ev.id, function(){
+    var fetchEventDetail = function (url, cb) {
+      var browser = new Browser({site: SITE});
+      browser.visit(url, function(){
         cb(null, browser);
       });
     };
-    async.map(events.all, fetchEventDetail, function(err, results){
+    async.map(testedEventUrls, fetchEventDetail, function(err, results){
       assert.ok(_.every(results, 'success'), 'Couldn\'t retreive all events at /events/:id.');
       for (var i = results.length - 1; i >= 0; i--) {
         var b = results[i];
