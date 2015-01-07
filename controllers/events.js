@@ -77,20 +77,20 @@ function saveEvent(request, response){
   }
 }
 
-function eventDetail (request, response, next) {
+function eventDetail (request, response) {
   var ev = events.getById(parseInt(request.params.id));
   if (ev === null) {
-    next();
+    response.status(404).send('No such event');
   }
   response.render('event-detail.html', {event: ev});
 }
 
-function rsvp (request, response, next){
+function rsvp (request, response){
   var ev = events.getById(parseInt(request.params.id));
-
   if (ev === null) {
-    next();
+    response.status(404).send('No such event');
   }
+
   if(validator.isEmail(request.body.email)){
     ev.attending.push(request.body.email);
     response.redirect('/events/' + ev.id);
