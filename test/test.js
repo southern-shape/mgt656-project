@@ -175,7 +175,6 @@ describe('The API',function(){
       for (var i = data.events.length - 1; i >= 0; i--) {
         assert.ok(data.events[i].title.indexOf(search) > -1, 'Expected to find ' + search + ' in title.');
       }
-      assert.ok(titleFound > -1, 'Could not find title: ' + search + ' in events.');
       done();
     });
   });
