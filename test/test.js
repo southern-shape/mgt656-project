@@ -198,17 +198,14 @@ describe('The about page',function(){
   });
 
   it('should have people on it', function(){
-      var numPeople = this.browser.queryAll('span[id$="-team"]').length;
-      assert.ok(numPeople > 0, 'Found 0 team members.');
+    assert.ok(this.browser.query('span[id$="-name"]'), 'Expected spans with name-based ids on page at ' + this.browser.location.pathname);
   });
 
-  //Check that number of people = number of headshot
   it('should have a picture of each person', function(){
-    var numPeople = this.browser.queryAll('span[id$="-team"]').length;
+    var numPeople = this.browser.queryAll('span[id$="-name"]').length;
     var numImages = this.browser.queryAll('img[id$="-headshot"]').length;
-    assert.ok( numPeople === numImages && numPeople > 0, 'Found ' + numPeople + ' people and ' + numImages + ' images.');    
+    assert.ok(numPeople === numImages && numPeople > 0, 'Found ' + numPeople + ' people and ' + numImages + ' images.');
   });
-
 
 
   after(function(done){
@@ -293,29 +290,16 @@ describe('The new event creation page',function(){
   });
 
   it('should have a form that can be posted back', function(){
-    //todo - should make sure there's only one form
     assert.ok(this.browser.query('form[method="POST"]'), 'Missing form with post method at ' + this.browser.location.pathname);
   });
 
   it('should have appropriate form fields and labels', function(){
-    var requiredFields = ['title', 'location', 'image', 'date', 'hour', 'minute'];
-
+    var requiredFields = ['title', 'location', 'image', 'year', 'month', 'day', 'hour', 'minute'];
     for (var i = requiredFields.length - 1; i >= 0; i--) {
-      //todo - should make sure there's only one of these fields
       // Test for labels
       assert.ok(this.browser.query('[for="' + requiredFields[i] + '"]'), 'Should have form label for ' + requiredFields[i] + ' at ' + this.browser.location.pathname);
       // Test for form fields
-      var field = this.browser.query('[name="' + requiredFields[i] + '"]');
-      assert.ok(field, 'Should have form name for ' + requiredFields[i] + ' at ' + this.browser.location.pathname);
-      if(requiredFields[i] === "date"){
-          assert.ok(field.type === "date", 'Date should be date type for ' + requiredFields[i] + ' at ' + this.browser.location.pathname);
-      }
-      else if(requiredFields[i] === "hour"){
-          assert.ok(field.type === "number" && field.attributes.getNamedItem("min").value === "0" && field.attributes.getNamedItem("max").value === "23", 'Hour should have range 0-23 at ' + this.browser.location.pathname);
-      }
-      else if(requiredFields[i] === "minute"){
-          assert.ok(field.type === "number" && field.attributes.getNamedItem("min").value === "0" && field.attributes.getNamedItem("max").value === "30", 'Minute have be either 0 or 30 at ' + this.browser.location.pathname);
-      }
+      assert.ok(this.browser.query('[name="' + requiredFields[i] + '"]'), 'Should have form name for ' + requiredFields[i] + ' at ' + this.browser.location.pathname);
     }
   });
 
@@ -342,7 +326,8 @@ describe('The form for creating new events',function(){
         month: 6,
         day: 1,
         hour: 4,
-        minute: 30        
+        minute: 30,
+        image: 'http://i.imgur.com/z8dajuP.png'
       };
     };
   });
@@ -393,8 +378,8 @@ describe('The form for creating new events',function(){
     },
     {
       field: 'month',
-      min: 1,
-      max: 12
+      min: 0,
+      max: 11
     },
     {
       field: 'day',
@@ -419,7 +404,7 @@ describe('The form for creating new events',function(){
       field: ri.field,
       desc: 'is more than ' + ri.max,
       type: 'select',
-      value: ri.min + 1
+      value: ri.max + 1
     });
     cases.push({
       field: ri.field,
@@ -442,7 +427,7 @@ describe('The form for creating new events',function(){
       postData.form[c.field] = c.value;
       request.post(postData, function(err, httpResponse, body){
         assert.ok(err === null, 'Error: ' + err);
-        assert.ok(httpResponse.statusCode === 200, 'Expected status code 200.');
+        assert.ok(httpResponse.statusCode === 200, 'Expected status code 200, but got' + httpResponse.statusCode);
         var window = jsdom.jsdom(body).parentWindow;
         assert.ok(window.document.getElementsByClassName('form-errors'), 'Error page should contain form errors.');
         done();
@@ -456,11 +441,12 @@ describe('The form for creating new events',function(){
   it('should redirect the user to the event detail page if the form is valid', function(done){
     var postData = {
       url: this.url,
-      form: this.getGoodData()
+      form: this.getGoodData(),
+      followRedirect: false
     };
     request.post(postData, function(err, httpResponse, body){
       assert.ok(err === null, 'Error: ' + err);
-      assert.ok(httpResponse.statusCode === 302, 'Expected error code 302.');
+      assert.ok(httpResponse.statusCode === 302, 'Expected error code 302, but got ' + httpResponse.statusCode);
       assert.ok(httpResponse.headers.hasOwnProperty('location'), 'http response header should include location.');
       expect(httpResponse.headers.location).to.match(/events\/\d+\/?$/, 'Bad redirect location, it should look like events/4, events/5, etc');
       done();
