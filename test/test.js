@@ -135,7 +135,7 @@ describe('The home page',function(){
   
   it('should not show events that are over', function(){
     // Event #4 is in the default data and has a date in the past
-    assert.notOk(this.browser.query('li.event[id$="event-4"]'), 'Expected to not see events in the past ' + this.browser.location.pathname);
+    assert.ok(!this.browser.query('li.event[id$="event-4"]'), 'Expected to not see events in the past ' + this.browser.location.pathname);
   });
 
   it('should have a link to create a new event', function(){
