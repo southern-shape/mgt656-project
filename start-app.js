@@ -17,7 +17,7 @@ app.listen(port, function() {
   }else{
   
     // We're running somewhere else, just print the port number.
-    console.log('Your app is running on PORT ', process.env.PORT);
+    console.log('Your app is running on PORT ', port);
   
   }
 });
