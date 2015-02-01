@@ -10,9 +10,8 @@ into the virtual machine you are using for MGT 645.
 
 To clone the repository, issue you'll use the following git command.
 
-	git clone https://git.yale.edu/klj39/mgt656-project.git
+	git clone https://github.com/yale-mgt-656/mgt656-spring-2015-project.git
 
-To do that, you'll need to be on the Yale network, or on the Yale VPN.
 Then, you can do 
 
 	cd mgt656-project
