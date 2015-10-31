@@ -73,7 +73,7 @@ describe('The site, on all pages',function(){
     };
   });
 
-  it('should be using Boostrap CSS', function(done){
+  it('should be using Bootstrap CSS', function(done){
     this.testPages(this.queryIsOk('head link[href*="bootstrap"]', 'Expected Bootstrap CSS'), done);
   });
 
