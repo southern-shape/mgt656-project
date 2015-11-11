@@ -47,7 +47,7 @@ describe('The site, on all pages',function(){
     var testedUrls = _.union(['/', '/about', '/events/new'], testedEventUrls);
 
     // Runs a `testFunc` against a `url`. `testFunc`
-    // should take a zombie browser as its sole parameter. 
+    // should take a zombie browser as its sole parameter.
     var createPageTestFunction = function(testFunc) {
       return function(url, callback){
         var browser = new Browser({site: SITE});
@@ -56,8 +56,8 @@ describe('The site, on all pages',function(){
             return callback(null, true);
           }
           // expect(browser.query('footer a[href="/about"]')).to.be.ok
-          return callback(null, testFunc(browser)); 
-        });        
+          return callback(null, testFunc(browser));
+        });
       };
     };
 
@@ -132,7 +132,7 @@ describe('The home page',function(){
     var numEventsWithLinks = this.browser.queryAll('li.event[id^="event-"] a[href^="/events/"]').length;
     assert.ok(numEvents === numEventsWithLinks && numEvents > 0, 'Expected ' + (numEvents > 0 ? numEvents : 'some')  + ' events with links at ' + this.browser.location.pathname + ' (found ' + numEventsWithLinks + ')');
   });
-  
+
   it('should not show events that are over', function(){
     // Event #4 is in the default data and has a date in the past
     assert.ok(!this.browser.query('li.event[id$="event-4"]'), 'Expected to not see events in the past ' + this.browser.location.pathname);
@@ -254,7 +254,7 @@ describe('The event detail pages',function(){
     });
   });
 
-  it('should reject RSVPs from Yale addresses', function(done){
+  it('should reject RSVPs from non-Yale addresses', function(done){
     var browser = new Browser();
     var email = 'foobar@harvard.edu';
 
@@ -459,5 +459,3 @@ describe('The form for creating new events',function(){
     this.server.close(done);
   });
 });
-
-
