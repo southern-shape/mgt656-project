@@ -477,7 +477,11 @@ describe('The form for creating new events',function(){
         assert.ok(err === null, 'Error: ' + err);
         assert.ok(httpResponse.statusCode === 200, 'Expected status code 200, but got' + httpResponse.statusCode);
         var window = jsdom.jsdom(body).defaultView;
-        assert.ok(window.document.getElementsByClassName('form-errors'), 'Error page should contain form errors.');
+        var formErrors = window.document.querySelector('ul.form-errors');
+        assert.ok(formErrors, 'Error page should contain form errors.');
+        var errorListItems = formErrors.getElementsByTagName('li');
+        assert.ok(errorListItems, 'Expected form errors.');
+        assert(errorListItems.length > 0, 'Expected form errors.');
         done();
       });
     });
