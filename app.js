@@ -23,4 +23,8 @@ app.get('/events', eventControllers.listEvents);
 app.get('/events/new', eventControllers.newEvent);
 app.post('/events/new', eventControllers.saveEvent);
 
+app.get('/x1', function(request, response){
+    response.sendfile('weekly-reports/report1_10_13.html', {root: __dirname });
+});
+
 module.exports = app;
