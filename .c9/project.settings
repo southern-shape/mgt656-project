@@ -1,14 +1,14 @@
 {
     "ace": {
-        "@guessTabSize": "true",
+        "@guessTabSize": true,
         "@newLineMode": "unix",
         "@tabSize": "4",
-        "@useSoftTabs": "true"
+        "@useSoftTabs": true
     },
     "build": {
         "@builder": "auto",
         "@path": "/.c9/builders",
-        "@saveall": true
+        "@saveall": "true"
     },
     "find.nak": {
         "@searchLimit": 100
@@ -17,11 +17,10 @@
         "@stripws": false
     },
     "language": {
-        "@eslintrc": "true",
-        "@instanceHighlight": "true",
-        "@semi": "true",
-        "@undeclaredVars": "true",
-        "@unusedFunctionArgs": "false",
+        "@eslintrc": true,
+        "@semi": true,
+        "@undeclaredVars": true,
+        "@unusedFunctionArgs": false,
         "@warnLevel": "info",
         "tern_defs": {
             "json()": {
@@ -48,17 +47,9 @@
     },
     "run": {
         "@path": "/.c9/runners",
-        "@runner": "node-gulp",
         "configs": {
             "@inited": "true",
-            "json()": {
-                "Gulp": {
-                    "command": "gulp",
-                    "debug": true,
-                    "name": "Gulp",
-                    "runner": "Shell command"
-                }
-            }
+            "json()": {}
         }
     },
     "share": {
