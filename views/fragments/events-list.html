@@ -1,6 +1,6 @@
 <ul>
   {% for event in events %}
-    <li>
+    <li class="event" id="{{event.id}}">
       {{event.title}}.
       <time datetime="{{event.date}}">{{event.date|prettyDate}}</time>
       {{event.attending.length}} attending so far.
