@@ -1,3 +1,5 @@
+<html>
+
 {% extends "layout.html" %}
 
 {% block header %}
@@ -6,10 +8,16 @@
   </header>
 {% endblock %}
 
+
 {% block mainContent %}
   <p>
     Welcome to {{ title }}. {{tagline}}
   </p>
+
+<img  
+    id="logo"
+    src="http://cdn.ebaumsworld.com/picture/DevinDamnation/ManBearPig.png">
+
   <p>Here is our super-awesome-exciting events list!</p>
   <div style="border: 1px solid black">
     {% include "fragments/events-list.html" %}
@@ -22,3 +30,5 @@
     <a id="new" href="/events/new">Create a new event</a>
   </p>
 {% endblock %}
+
+</html>

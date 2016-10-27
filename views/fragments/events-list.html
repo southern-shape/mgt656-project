@@ -1,7 +1,8 @@
 <ul>
   {% for event in events %}
-    <li class="event" id="{{event.id}}">
-      {{event.title}}.
+    <li class="event" id="event-{{event.id}}">
+      <a href="/events/{{event.id}}">
+      {{eventmo.title}}.</a>
       <time datetime="{{event.date}}">{{event.date|prettyDate}}</time>
       {{event.attending.length}} attending so far.
     </li>
