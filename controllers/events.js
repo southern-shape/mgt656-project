@@ -70,6 +70,19 @@ function checkIntRange(request, fieldName, minVal, maxVal, contextData){
 }
 
 
+// Custom function To fix should redirect the user to the event detail page if the form is valid
+function getNewId (){
+  var maxId = 0;
+  var allEvents = events.all;
+  for (var i = allEvents.length - 1; i >= 0; i--) {
+    if (maxId < allEvents[i].id){
+      maxId = allEvents[i].id;
+    }
+  }
+   maxId++;
+   return maxId;
+}
+
 
 
 /**
@@ -100,18 +113,6 @@ function saveEvent(request, response){
   checkIntRange(request, 'month', 0, 11, contextData);  
   checkIntRange(request, 'day', 1, 31, contextData);
   checkIntRange(request, 'hour', 0, 23, contextData);
-  
-  function getNewId (){
-   var maxId = 0;
-   var allEvents = events.all;
-   for (var i = allEvents.length - 1; i >= 0; i--) {
-     if (maxId < allEvents[i].id){
-       maxId = allEvents[i].id;
-     }
-   }
-   maxId++;
-   return maxId;
-  }
 
   if (contextData.errors.length === 0) {
     var newId = getNewId();
@@ -125,8 +126,8 @@ function saveEvent(request, response){
     };
     events.all.push(newEvent);
     response.redirect('/events/'+newId);
-  
-  }else{
+  }
+  else{
     response.render('create-event.html', contextData);
   }
 }
