@@ -2,278 +2,106 @@
 
 {% block mainContent %}
 
-<style>
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,600,400italic);
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -webkit-font-smoothing: antialiased;
-  -moz-font-smoothing: antialiased;
-  -o-font-smoothing: antialiased;
-  font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-
-body {
-  font-family: "Roboto", Helvetica, Arial, sans-serif;
-  font-weight: 100;
-  font-size: 12px;
-  line-height: 30px;
-  color: #777;
-  background: #4CAF50;
-}
-
-.container {
-  max-width: 400px;
-  width: 100%;
-  margin: 0 auto;
-  position: relative;
-}
-
-#create-event input[type="text"],
-#create-event input[type="email"],
-#create-event input[type="tel"],
-#create-event input[type="url"],
-#create-event textarea,
-#create-event button[type="submit"] {
-  font: 400 12px/16px "Roboto", Helvetica, Arial, sans-serif;
-}
-
-#create-event {
-  background: #F9F9F9;
-  padding: 25px;
-  margin: 150px 0;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
-}
-
-#create-event h3 {
-  display: block;
-  font-size: 30px;
-  font-weight: 300;
-  margin-bottom: 10px;
-}
-
-#create-event h4 {
-  margin: 5px 0 15px;
-  display: block;
-  font-size: 13px;
-  font-weight: 400;
-}
-
-fieldset {
-  border: medium none !important;
-  margin: 0 0 10px;
-  min-width: 100%;
-  padding: 0;
-  width: 100%;
-}
-
-#create-event input[type="text"],
-#create-event input[type="email"],
-#create-event input[type="tel"],
-#create-event input[type="url"],
-#create-event textarea {
-  width: 100%;
-  border: 1px solid #ccc;
-  background: #FFF;
-  margin: 0 0 5px;
-  padding: 10px;
-}
-
-#create-event input[type="text"]:hover,
-#create-event input[type="email"]:hover,
-#create-event input[type="tel"]:hover,
-#create-event input[type="url"]:hover,
-#create-event textarea:hover {
-  -webkit-transition: border-color 0.3s ease-in-out;
-  -moz-transition: border-color 0.3s ease-in-out;
-  transition: border-color 0.3s ease-in-out;
-  border: 1px solid #aaa;
-}
-
-#create-event textarea {
-  height: 100px;
-  max-width: 100%;
-  resize: none;
-}
-
-#create-event button[type="submit"] {
-  cursor: pointer;
-  width: 100%;
-  border: none;
-  background: #4CAF50;
-  color: #FFF;
-  margin: 0 0 5px;
-  padding: 10px;
-  font-size: 15px;
-}
-
-#create-event button[type="submit"]:hover {
-  background: #43A047;
-  -webkit-transition: background 0.3s ease-in-out;
-  -moz-transition: background 0.3s ease-in-out;
-  transition: background-color 0.3s ease-in-out;
-}
-
-#create-event button[type="submit"]:active {
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
-}
-
-.copyright {
-  text-align: center;
-}
-
-#create-event input:focus,
-#create-event textarea:focus {
-  outline: 0;
-  border: 1px solid #aaa;
-}
-
-::-webkit-input-placeholder {
-  color: #888;
-}
-
-:-moz-placeholder {
-  color: #888;
-}
-
-::-moz-placeholder {
-  color: #888;
-}
-
-:-ms-input-placeholder {
-  color: #888;
-}
-</style>
-  
- <div class="container">  
-  <form id="create-event" method="POST">
-    <h3>New Event Form</h3>
-    <h4>Add your details here</h4>
-    {% if errors %}
-    <div class="form-errors">
+  {% if errors %}
+    <div>
       <p>Please correct the following errors!</p>
-      <ul>
+      <ul class="form-errors">
         {% for error in errors %}
           <li>{{error}}</li>
         {% endfor %}
       </ul>
     </div>
-    {% endif %}
-    <fieldset>
-	  <label for="title">Event title:</label>
-      <input placeholder="Enter the title here" type="text" name="title" id="title" tabindex="1" required autofocus>
-	</fieldset>
-    <fieldset>
-      <label for="location">Event location:</label>
-      <input placeholder="Enter the location here" type="text" name="location" id="location"  tabindex="2" required></input>
-	</fieldset>
-    <fieldset>
-	  <label for="image">Event image:</label>
-      <input placeholder="Place the image url here" type="url" name="image" id="image" tabindex="3" required></input>
-    </fieldset>
-    <fieldset>
-	  <label for="year">Event year:</label>
-      <select placeholder="Enter the year here" name="year" id="year" tabindex="4" required>
-          <option value="2015">2015</option>
-          <option value="2016">2016</option>
-      </select>
-    </fieldset>
-    <fieldset>
-	  <label for="month">Event month:</label>
-      <select placeholder="Enter the month here" name="month" id="month" tabindex="5" required>
-          <option value="0">January</option>
-          <option value="1">February</option>
-          <option value="2">March</option>
-          <option value="3">April</option>
-          <option value="4">May</option>
-          <option value="5">June</option>  
-          <option value="6">July</option>
-          <option value="7">August</option>  
-          <option value="8">September</option>
-          <option value="9">October</option>  
-          <option value="10">November</option>
-          <option value="11">December</option>  
-      </select>
-    </fieldset>
-	<fieldset>
-	  <label for="day">Event day:</label>
-      <select placeholder="Enter the day here" name="day" id="day" tabindex="6" required>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>  
-          <option value="6">6</option>
-          <option value="7">7</option>  
-          <option value="8">8</option>
-          <option value="9">9</option>  
-          <option value="10">10</option>
-          <option value="11">11</option>    
-          <option value="12">12</option>
-          <option value="13">13</option>
-          <option value="14">14</option>
-          <option value="15">15</option>
-          <option value="16">16</option>  
-          <option value="17">17</option>
-          <option value="18">18</option>  
-          <option value="19">19</option>
-          <option value="20">20</option>  
-          <option value="21">21</option>
-          <option value="22">22</option> 
-          <option value="23">23</option>
-          <option value="24">24</option>
-          <option value="25">25</option>
-          <option value="26">26</option>
-          <option value="27">27</option>  
-          <option value="28">28</option>
-          <option value="29">29</option>  
-          <option value="30">30</option>
-          <option value="31">31</option>  
-      </select>
-    </fieldset>
-	<fieldset>
-	  <label for="hour">Event hour:</label>
-      <select placeholder="Enter the hour here" name="hour" id="hour" tabindex="7" required>
-          <option value="0">0</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>  
-          <option value="6">6</option>
-          <option value="7">7</option>  
-          <option value="8">8</option>
-          <option value="9">9</option>  
-          <option value="10">10</option>
-          <option value="11">11</option>    
-          <option value="12">12</option>
-          <option value="13">13</option>
-          <option value="14">14</option>
-          <option value="15">15</option>
-          <option value="16">16</option>  
-          <option value="17">17</option>
-          <option value="18">18</option>  
-          <option value="19">19</option>
-          <option value="20">20</option>  
-          <option value="21">21</option>
-          <option value="22">22</option> 
-          <option value="23">23</option>        
-      </select>
-    </fieldset>
-	<fieldset>
-	  <label for="minute">Event minute:</label>
-      <select placeholder="Enter the minute here" name="minute" id="minute" tabindex="8" required>
-          <option value="0">0</option>
-          <option value="30">30</option>
-      </select>
-    </fieldset>
-    <fieldset>
-      <button name="submit" type="submit" id="create-event-submit" data-submit="...Sending">Get me going!</button>
-    </fieldset>
-  </form>
+  {% endif %}
+
+<form id="create-event" method="POST">
+<div>
+    <label for="title">Event title:</label>
+    <input type="text" name="title">
 </div>
+<div>
+    <label for="location">Location:</label>
+    <input type="text" name="location"> 
+</div>
+<div>
+    <label for="image">Image:</label>
+    <input type="img" name="image">
+</div>
+<div>
+    <label for="year">Year:</label>  
+    <select name="year">
+      <option value="2015">2015</option> 
+      <option value="2016" selected>2016</option>
+    </select>
+</div>
+
+<div>
+    <label for="month">Month:</label>
+    <select name="month">
+      <option value="0">January</option> 
+      <option value="1">February</option>
+      <option value="2">March</option>
+      <option value="3">April</option> 
+      <option value="4">May</option>
+      <option value="5">June</option>
+      <option value="6">July</option> 
+      <option value="7">August</option>
+      <option value="8">September</option>
+      <option value="9">October</option> 
+      <option value="10" selected>November</option>
+      <option value="11">December</option>
+    </select>
+</div>
+<div>
+    <label for="day">Day:</label>
+    <select name="day">
+      <option value="0">Sunday</option> 
+      <option value="1">Monday</option>
+      <option value="2">Tuesday</option>
+      <option value="3">Wednesday</option> 
+      <option value="4" selected>Thursday</option>
+      <option value="5">Friday</option>
+      <option value="6">Saturday</option> 
+    </select>
+</div>
+<div>
+    <label for="hour">Hour</label>
+    <select name="hour">
+      <option value="0">0</option> 
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option> 
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option> 
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option> 
+      <option value="10">10</option>
+      <option value="11">11</option>
+      <option value="12">12</option> 
+      <option value="13">13</option>
+      <option value="14">14</option>
+      <option value="15">15</option> 
+      <option value="16">16</option>
+      <option value="17">17</option>
+      <option value="18">18</option> 
+      <option value="19">19</option>
+      <option value="20">20</option>
+      <option value="21">21</option> 
+      <option value="22" selected>22</option>
+      <option value="23">23</option>
+    </select>
+</div>
+<div>
+    <label for="minute">Minute:</label>
+    <select name="minute">
+      <option value="0">00</option> 
+      <option value="30" selected>30</option>
+    </select>
+</div>
+<div> 
+<input type= "Submit" name="Submit" value="Submit"/>
+</div>
+</form>
+
 {% endblock %}

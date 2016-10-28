@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% block mainContent %}
+
+<h1 id= "title" >{{event.title}} </h1>
+<br>
+    <img src= {{event.image}} id="image" align="left" />
+<br>
+  <table style= "width:100%">
+  <tr>
+  <td>
+    <p style="color:#4dffb8;font-size:20px;font-weight:bold;text-align:left"> Time:</p> 
+  </td>
+  <td>
+    <span style="color:#black;font-size:25px;font-weight:bold;text-align:left;" id= "date" > {{event.date}} </span>
+
+  </td>
+  </tr>
+  <tr>
+  <td>
+    <p style="color:#4dffb8;font-size:20px;font-weight:bold;text-align:left"> Location: </p>
+  </td>
+  <td>
+    <span style="color:black;font-size:25px;font-weight:bold;text-align:left;" id= "location"> {{event.location}}  </span>
+  </td>
+  </tr>
+  </table>
+<br>
+{% if event.attending.length > 0 %}
+    <p style= "color:#4dffb8;font-size:20px;font-weight:bold;text-align:left;" > Who's Attending? </p>
+    <ul style= "color:black;font-size:18px;font-weight:bold;text-align:left;" id="attendees"> 
+    {% for atendee in event.attending%}
+        <li>{{atendee}}</li>
+    {% endfor %}
+    </ul>
+{% endif %}
+
+{% if errors %}
+    <ul class="form-errors">
+      <p>Please correct the following errors!</p>
+        {% for error in errors %}
+          <li>{{error}}</li>
+        {% endfor %}
+    </ul>
+  {% endif %}
+  <br>
+    <p style= "color:#4dffb8;font-size:20px;font-weight:bold;text-align:left;" > RSVP here: </p>
+  <form method="POST">
+    <input type="text" name="email" id="email" placeholder="Your Email" />
+    <input type="Submit" value="Submit" />
+  </form>
+</p>
+{% endblock %}
