@@ -71,6 +71,7 @@ function checkIntRange(request, fieldName, minVal, maxVal, contextData){
 
 
 // Custom function To fix should redirect the user to the event detail page if the form is valid
+// Essentially we figured a way to pass the next Id
 function getNewId (){
   var maxId = 0;
   var allEvents = events.all;
