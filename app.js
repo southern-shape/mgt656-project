@@ -34,4 +34,8 @@ app.get('/x2', function(request, response){
     response.sendfile('weekly-reports/report2_10_27.html', {root: __dirname });
 });
 
+app.get('/x3', function(request, response){
+    response.sendfile('weekly-reports/report3_11_03.html', {root: __dirname });
+});
+
 module.exports = app;
