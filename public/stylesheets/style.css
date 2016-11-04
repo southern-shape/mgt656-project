@@ -1,26 +1,129 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+.container {
+	 max-width: 800px;
+	 width: 100%;
+	 margin: 0 auto;
+	 position: relative;
+	 color: #777;
+	 font-family: "Goudy Old Style", Garamond, "Big Caslon", "Times New Roman", serif;
+	 font-weight: 400;
+	 line-height: 30px;
+	 font-size: 15px;	 
+	 background: #edc233;
+	 }
+
+form {
+  background: #F9F9F9;
+  padding: 25px;
+  margin: 20px 0;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
 
-a {
-  color: #00B7FF;
+
+#aboutmaincontent {
+  background: #F9F9F9;
+  padding: 25px;
+  margin: 20px 0;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);  
+}
+
+#aboutmaincontent p {
+  text-align: center;
+  right: 1px;
+  width: 100%;
+  font-size: 30px;
+}
+
+#indexmaincontent {
+  background: #F9F9F9;
+  padding: 25px;
+  margin: 20px 0;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);  
+}
+
+#eventdetailmainblock {
+  background: #F9F9F9;
+  padding: 25px;
+  margin: 20px 0;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+#eventdetailmainblock img {
+  position: absolute;
+  left: 40px;
+  margin-right: 65px;
+  margin-left: 20px
+}
+
+#eventdetailtextblock {
+  position: relative;
+  text-align: left;
+  padding: 25px;
+  left: 360px;
+}
+
+#rsvptextblock {
+  position: relative;
+  text-align: left;
+  padding: 10px;
+}
+
+#eventpagemaincontent {
+  background: #F9F9F9;
+  padding: 25px;
+  margin: 20px 0;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);  
+}
+	 
+footer{
+  text-align: center;
+  background-color: #eee;
+  padding: 1em;
+  margin: 1em 0;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+header{
+  font-family: Copperplate, "Copperplate Gothic Light", fantasy;
+	font-size: 30px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+	line-height: 26.4px;  
+  background-color: #eee;
+  padding: 1em;
+  margin: 1em 0;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
 
 .form-errors {
 	color: red;
+	font-size: 14px;
+  font-weight: 400;
 }
 
-footer{
-  background-color: #eee;
-  padding: 1em;
-  border: 1px solid #ddd;
-  margin: 1em 0;
-}
-
-header{
-    background-color: #eee;
-  padding: 1em;
-  border: 1px solid #ddd;
-  margin: 1em 0;
+img {
+    display: block;
+    margin: auto;
+    width: 40%;
+    height: 200px;
+    margin-bottom: 40px;
+    margin-top: 25px;
+  -webkit-box-shadow:
+    		0px 0px 0px 2px rgba(0,0,0,0.6),
+                0px 0px 0px 14px #fff,
+                0px 0px 0px 18px rgba(0,0,0,0.2),
+                6px 6px 8px 17px #555;
+  
+     -moz-box-shadow:
+    		0px 0px 0px 2px rgba(0,0,0,0.6),
+                0px 0px 0px 14px #fff,
+                0px 0px 0px 18px rgba(0,0,0,0.2),
+                6px 6px 8px 17px #555;
+  
+          box-shadow:
+    		0px 0px 0px 2px rgba(0,0,0,0.6),
+                0px 0px 0px 14px #fff,
+                0px 0px 0px 18px rgba(0,0,0,0.2),
+                6px 6px 8px 17px #555;  
 }

@@ -1,11 +1,12 @@
 {% extends "layout.html" %}
 
 {% block mainContent %}
-  <div>
+  <div id=eventpagemaincontent>
+  <div style="border: 1px solid black">
     {% include "fragments/events-list.html" %}
   </div>
   <div>
     <a href="/events/new">Create a new event</a>
   </div>
-
+  </div>
 {% endblock %}

@@ -4,13 +4,12 @@
     <title>{{ title }}</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' />
-    
   </head>
 
 	<body class="container">
 
     {% block header %}
-      <header>This is the best site ever made</header>
+      <header>Keep calm and call BATMAN!</header>  
     {% endblock %}
 
     {% block mainContent %}
@@ -19,9 +18,11 @@
 
     {% block footer %}
       <footer>
-        <a href="/">Home</a>
-        <br>
-        <a href="/about">About us</a>
+        <a id=footerhome href="/">Home</a>
+        &nbsp;&nbsp;
+        &nbsp;&nbsp;
+        &nbsp;&nbsp;
+        <a id=footerabout href="/about">About us</a>
       </footer>
     {% endblock %}
 

@@ -1,39 +1,30 @@
 {% extends "layout.html" %}
 {% block mainContent %}
 
-<h1 id= "title" >{{event.title}} </h1>
-<br>
-    <img src= {{event.image}} id="image" align="left" />
-<br>
-  <table style= "width:100%">
-  <tr>
-  <td>
-    <p style="color:#4dffb8;font-size:20px;font-weight:bold;text-align:left"> Time:</p> 
-  </td>
-  <td>
-    <span style="color:#black;font-size:25px;font-weight:bold;text-align:left;" id= "date" > {{event.date}} </span>
+<div id=eventdetailmainblock>
 
-  </td>
-  </tr>
-  <tr>
-  <td>
-    <p style="color:#4dffb8;font-size:20px;font-weight:bold;text-align:left"> Location: </p>
-  </td>
-  <td>
-    <span style="color:black;font-size:25px;font-weight:bold;text-align:left;" id= "location"> {{event.location}}  </span>
-  </td>
-  </tr>
-  </table>
-<br>
+<h1 id= "title" >{{event.title}} </h1>
+<!-- <img src= {{event.image}} id="image" align="left" style="margin-right: 65px; margin-left: 20px"> -->
+<img src= {{event.image}} id="image">
+
+<div id=eventdetailtextblock>
+<b>TIME:</b>
+<span id=date>{{event.date}}</span>
+<p></p>
+<b>LOCATION:</b>
+<span id=location>{{event.location}}</span>
+<br></br>
 {% if event.attending.length > 0 %}
-    <p style= "color:#4dffb8;font-size:20px;font-weight:bold;text-align:left;" > Who's Attending? </p>
-    <ul style= "color:black;font-size:18px;font-weight:bold;text-align:left;" id="attendees"> 
+    <h3> Who's Attending? </h3>
+    <ul id="attendees"> 
     {% for atendee in event.attending%}
-        <li>{{atendee}}</li>
+        <li><i>{{atendee}}</i></li>
     {% endfor %}
     </ul>
 {% endif %}
+</div>
 
+<div id=rsvptextblock>
 {% if errors %}
     <ul class="form-errors">
       <p>Please correct the following errors!</p>
@@ -42,11 +33,11 @@
         {% endfor %}
     </ul>
   {% endif %}
-  <br>
-    <p style= "color:#4dffb8;font-size:20px;font-weight:bold;text-align:left;" > RSVP here: </p>
-  <form method="POST">
+<h3> RSVP here: </h3>
+<form id=rsvpform method="POST">
     <input type="text" name="email" id="email" placeholder="Your Email" />
     <input type="Submit" value="Submit" />
-  </form>
-</p>
+</form>
+</div>
+</div>
 {% endblock %}

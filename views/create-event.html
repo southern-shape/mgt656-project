@@ -2,6 +2,7 @@
 
 {% block mainContent %}
 
+<form id="create-event" method="POST">
   {% if errors %}
     <div>
       <p>Please correct the following errors!</p>
@@ -11,30 +12,30 @@
         {% endfor %}
       </ul>
     </div>
-  {% endif %}
+  {% endif %}  
 
-<form id="create-event" method="POST">
-<div>
+<img src="https://media.giphy.com/media/1kg4iMmlPUKcg/giphy.gif" style="position: absolute; right: 75px;">
+<div id=formfields>    
+<fieldset>
     <label for="title">Event title:</label>
     <input type="text" name="title">
-</div>
-<div>
+</fieldset>
+<fieldset>
     <label for="location">Location:</label>
     <input type="text" name="location"> 
-</div>
-<div>
+</fieldset>
+<fieldset>
     <label for="image">Image:</label>
     <input type="img" name="image">
-</div>
-<div>
+</fieldset>
+<fieldset>
     <label for="year">Year:</label>  
     <select name="year">
       <option value="2015">2015</option> 
       <option value="2016" selected>2016</option>
     </select>
-</div>
-
-<div>
+</fieldset>
+<fieldset>
     <label for="month">Month:</label>
     <select name="month">
       <option value="0">January</option> 
@@ -50,20 +51,44 @@
       <option value="10" selected>November</option>
       <option value="11">December</option>
     </select>
-</div>
-<div>
+</fieldset>
+<fieldset>
     <label for="day">Day:</label>
     <select name="day">
-      <option value="0">Sunday</option> 
-      <option value="1">Monday</option>
-      <option value="2">Tuesday</option>
-      <option value="3">Wednesday</option> 
-      <option value="4" selected>Thursday</option>
-      <option value="5">Friday</option>
-      <option value="6">Saturday</option> 
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option> 
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option> 
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option> 
+      <option value="10">10</option>
+      <option value="11">11</option>
+      <option value="12">12</option> 
+      <option value="13">13</option>
+      <option value="14">14</option>
+      <option value="15">15</option> 
+      <option value="16">16</option>
+      <option value="17">17</option>
+      <option value="18">18</option> 
+      <option value="19">19</option>
+      <option value="20">20</option>
+      <option value="21">21</option>
+      <option value="22">22</option>
+      <option value="23">23</option> 
+      <option value="24">24</option>
+      <option value="25">25</option>
+      <option value="26">26</option> 
+      <option value="27">27</option>
+      <option value="28">28</option>
+      <option value="29">29</option>
+      <option value="30">30</option>
+      <option value="31">31</option>
     </select>
-</div>
-<div>
+</fieldset>
+<fieldset>
     <label for="hour">Hour</label>
     <select name="hour">
       <option value="0">0</option> 
@@ -91,16 +116,17 @@
       <option value="22" selected>22</option>
       <option value="23">23</option>
     </select>
-</div>
-<div>
+</fieldset>
+<fieldset>
     <label for="minute">Minute:</label>
     <select name="minute">
       <option value="0">00</option> 
       <option value="30" selected>30</option>
     </select>
-</div>
-<div> 
+</fieldset>
+<fieldset> 
 <input type= "Submit" name="Submit" value="Submit"/>
+</fieldset>
 </div>
 </form>
 

@@ -4,31 +4,41 @@
 
 {% block header %}
   <header>
-    <h1>This is THE best event site for potato lovers</h1>
+    <div id=headertextindex>
+    <h3>Always be yourself!</h3>
+    <h1>UNLESS YOU CAN BE BATMAN</h1>
+    <h2>Then</h2>
+    <h3>always be Batman!</h3>
+    </div>
   </header>
 {% endblock %}
 
 
 {% block mainContent %}
+<div id=indexmaincontent>
   <p>
     Welcome to {{ title }}. {{tagline}}
   </p>
 
-<img  
-    id="logo"
-    src="http://cdn.ebaumsworld.com/picture/DevinDamnation/ManBearPig.png">
+  <img id="logo" src="http://img06.deviantart.net/ce86/i/2013/027/1/5/batman_logo_only_by_deathonabun-d5swf2u.png">
 
-  <p>Here is our super-awesome-exciting events list!</p>
+  <p>
+    Here is our super-awesome-exciting events list!
+  </p>
+  
   <div style="border: 1px solid black">
     {% include "fragments/events-list.html" %}
   </div>
+  
   <p>
     Check out the <a href="/about">About us</a> page
     as well as the <a href="/events">Events</a> page.
   </p>
+  
   <p>
     <a id="new" href="/events/new">Create a new event</a>
   </p>
+</div>  
 {% endblock %}
 
 </html>
