@@ -6,38 +6,38 @@
 var allEvents = [
   {
     id: 0,
-    title: 'SOM House Party',
+    title: 'The Super Superman Party',
     // Note that JavaScript months are zero-indexed,
     // so, month zero is January. This is Jan 17th
     // 2013 at 4:30pm local time.
-    date:   new Date(2016, 12, 17, 16, 30, 0),
-    image: 'http://i.imgur.com/pXjrQ.gif',
-    location: 'Kyle \'s house',
-    attending: ['kyle.jensen@yale.edu', 'kim.kardashian@yale.edu']
+    date:   new Date(2016, 11, 17, 16, 30, 0),
+    image: 'https://s-media-cache-ak0.pinimg.com/originals/f9/a3/78/f9a378c6bba6893c667dc249b7a52adb.gif',
+    location: 'Kyle \'s fortress of solitude',
+    attending: ['kyle.jensen@yale.edu','not.batman@yale.edu', 'lex.luthor@yale.edu']
   },
   {
     id: 1,
-    title: 'BBQ party for hackers and nerds',
-    date:   new Date(2015, 8, 1, 19, 0, 0),
-    image: 'http://i.imgur.com/7pe2k.gif',
-    location: 'Miles\' house',
-    attending: ['kyle.jensen@yale.edu', 'kim.kardashian@yale.edu']
+    title: 'Christmas Wonder Women @ Yale',
+    date:   new Date(2016, 11, 25, 19, 0, 0),
+    image: 'https://s-media-cache-ak0.pinimg.com/originals/66/76/5b/66765b630591d52046d266270d5e7ba8.gif',
+    location: 'Evans 2400',
+    attending: ['wim@yale.edu', 'amy.wrz@yale.edu', 'tori.bre@yale.edu']
   },
   {
     id: 2,
-    title: 'BBQ for managers',
-    date:   new Date(2015, 9, 20, 18, 0, 0),
-    image: 'http://i.imgur.com/CJLrRqh.gif',
-    location: 'Barry Nalebuff\'s house',
-    attending: ['kim.kardashian@yale.edu'],
+    title: 'Flash party for dating enthusiasts',
+    date:   new Date(2016, 9, 20, 11, 0, 0),
+    image: 'https://67.media.tumblr.com/8d1b1f3ef8f8595ce1b249b9bf2ff8f6/tumblr_na2fy189Cl1tz71z6o1_500.gif',
+    location: 'GPSY',
+    attending: ['mr.deadpool@yale.edu','x.men@yale.edu'],
   },
   {
     id: 3,
-    title: 'Cooking lessons for the busy business student',
-    date:   new Date(2014, 8, 2, 19, 0, 0),
-    image: 'http://i.imgur.com/02KT9.gif',
+    title: 'Aqua bbq for couples',
+    date:   new Date(2016, 10, 5, 13, 0, 0),
+    image: 'https://media.giphy.com/media/qBvHZHgiUmWBi/giphy.gif',
     location: 'Yale Farm',
-    attending: ['homer.simpson@yale.edu'],
+    attending: ['peter.parker@yale.edu', 'maryjane.watson@yale.edu','clark.kent@yale.edu','lois.lane@yale.edu'],
   }
 ];
 

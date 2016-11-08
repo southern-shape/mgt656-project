@@ -17,27 +17,27 @@
 {% block mainContent %}
 <div id=indexmaincontent>
   <p>
-    Welcome to {{ title }}. {{tagline}}
+    The best place for Yale's comic-related events. Marvel fans are welcome, but judged appropriately.
   </p>
 
   <img id="logo" src="http://img06.deviantart.net/ce86/i/2013/027/1/5/batman_logo_only_by_deathonabun-d5swf2u.png">
 
   <p>
-    Here is our super-awesome-exciting events list!
+    What's coming up:
   </p>
   
-  <div style="border: 1px solid black">
+  <div>
     {% include "fragments/events-list.html" %}
   </div>
   
   <p>
-    Check out the <a href="/about">About us</a> page
-    as well as the <a href="/events">Events</a> page.
+    Create an amazing <a id="new" href="/events/new">new event</a>
+  </p>
+
+  <p>
+    Check out our epic past <a href="/events">past events</a>
   </p>
   
-  <p>
-    <a id="new" href="/events/new">Create a new event</a>
-  </p>
 </div>  
 {% endblock %}
 
