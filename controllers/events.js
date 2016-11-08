@@ -114,8 +114,48 @@ function saveEvent(request, response){
   var year = checkIntRange(request, 'year', 2015, 2016, contextData);
   var month = checkIntRange(request, 'month', 0, 11, contextData);  
   var day = checkIntRange(request, 'day', 1, 31, contextData);
+  var mahina = new Array();
+  mahina[0] = "January";
+  mahina[1] = "February";
+  mahina[2] = "March";
+  mahina[3] = "April";
+  mahina[4] = "May";
+  mahina[5] = "June";
+  mahina[6] = "July";
+  mahina[7] = "August";
+  mahina[8] = "September";
+  mahina[9] = "October";
+  mahina[10] = "November";
+  mahina[11] = "December";
+  
+  
+  // Checking the month and deciding if 30/31 days
+  if (month === 3 || month === 5 || month === 8 || month === 10) {
+    if(day === 31) {
+      contextData.errors.push('We don\'t have 31 days in ' + mahina[month]);  
+    }
+  }
+  
+  
+  // Checking if leap year and deciding which days are allowed in Feb
+  if (new Date(year, 1, 29).getMonth() === 1){
+      if (month === 1) {
+        if (day === 30 || day === 31) {
+          contextData.errors.push('We don\'t have ' + day + ' days in ' + mahina[month]);       
+        }
+      }
+  }    
+  else{
+        if (month === 1) {
+          if (day === 29 || day === 30 || day === 31) {
+            contextData.errors.push('We don\'t have ' + day + ' days in ' + mahina[month]);       
+        }
+      }
+  }
+  
+  
   var hour = checkIntRange(request, 'hour', 0, 23, contextData);
-
+  
   if (contextData.errors.length === 0) {
     var newId = getNewId();
     var newEvent = {
