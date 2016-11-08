@@ -12,23 +12,23 @@ var allEvents = [
     // 2013 at 4:30pm local time.
     date:   new Date(2016, 11, 17, 16, 30, 0),
     image: 'https://s-media-cache-ak0.pinimg.com/originals/f9/a3/78/f9a378c6bba6893c667dc249b7a52adb.gif',
-    location: 'Kyle \'s fortress of solitude',
+    location: 'Kyle\'s fortress of solitude',
     attending: ['kyle.jensen@yale.edu','not.batman@yale.edu', 'lex.luthor@yale.edu']
   },
   {
     id: 1,
-    title: 'Christmas Wonder Women @ Yale',
-    date:   new Date(2016, 11, 25, 19, 0, 0),
+    title: 'Christmas Wonder Women @ SOM',
+    date:   new Date(2015, 11, 25, 19, 0, 0),
     image: 'https://s-media-cache-ak0.pinimg.com/originals/66/76/5b/66765b630591d52046d266270d5e7ba8.gif',
-    location: 'Evans 2400',
+    location: 'Evans Hall 2400',
     attending: ['wim@yale.edu', 'amy.wrz@yale.edu', 'tori.bre@yale.edu']
   },
   {
     id: 2,
-    title: 'Flash party for dating enthusiasts',
-    date:   new Date(2016, 9, 20, 11, 0, 0),
-    image: 'https://67.media.tumblr.com/8d1b1f3ef8f8595ce1b249b9bf2ff8f6/tumblr_na2fy189Cl1tz71z6o1_500.gif',
-    location: 'GPSY',
+    title: 'Batman party for dating enthusiasts',
+    date:   new Date(2016, 11, 20, 11, 0, 0),
+    image: 'https://66.media.tumblr.com/bc1fa4352a7211a42dd23e28f3bd948f/tumblr_nbmgr0AnSY1rtvb79o1_400.gif',
+    location: 'GPSCY',
     attending: ['mr.deadpool@yale.edu','x.men@yale.edu'],
   },
   {
