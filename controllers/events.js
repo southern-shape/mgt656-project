@@ -67,6 +67,7 @@ function checkIntRange(request, fieldName, minVal, maxVal, contextData){
     contextData.errors.push('Your ' + [fieldName] + 'should be between' + minVal + 'and' + maxVal);
     }
   }
+  return value;
 }
 
 
@@ -110,10 +111,10 @@ function saveEvent(request, response){
     contextData.errors.push('Your location is empty or too long. Fix it!');
   }
   
-  checkIntRange(request, 'year', 2015, 2016, contextData);
-  checkIntRange(request, 'month', 0, 11, contextData);  
-  checkIntRange(request, 'day', 1, 31, contextData);
-  checkIntRange(request, 'hour', 0, 23, contextData);
+  var year = checkIntRange(request, 'year', 2015, 2016, contextData);
+  var month = checkIntRange(request, 'month', 0, 11, contextData);  
+  var day = checkIntRange(request, 'day', 1, 31, contextData);
+  var hour = checkIntRange(request, 'hour', 0, 23, contextData);
 
   if (contextData.errors.length === 0) {
     var newId = getNewId();
@@ -122,7 +123,7 @@ function saveEvent(request, response){
       title: request.body.title,
       location: request.body.location,
       image: request.body.image,
-      date: new Date(),
+      date: new Date(year, month, day, hour),
       attending: []
     };
     events.all.push(newEvent);
