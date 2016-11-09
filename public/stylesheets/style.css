@@ -45,13 +45,16 @@ form {
   padding: 25px;
   margin: 20px 0;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  
+  width: 100%;
+  overflow-x: hidden;
 }
 
 #eventdetailmainblock img {
   position: absolute;
   left: 40px;
   margin-right: 65px;
-  margin-left: 20px
+  margin-left: 20px;
 }
 
 #eventdetailtextblock {

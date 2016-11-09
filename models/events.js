@@ -19,7 +19,7 @@ var allEvents = [
     id: 1,
     title: 'Christmas Wonder Women @ SOM',
     date:   new Date(2015, 11, 25, 19, 0, 0),
-    image: 'https://s-media-cache-ak0.pinimg.com/originals/66/76/5b/66765b630591d52046d266270d5e7ba8.gif',
+    image: 'http://static7.comicvine.com/uploads/original/10/100439/2506708-tumblr_lslr8jpnsu1qko4x4o1_500.gif',
     location: 'Evans Hall 2400',
     attending: ['wim@yale.edu', 'amy.wrz@yale.edu', 'tori.bre@yale.edu']
   },
