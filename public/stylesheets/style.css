@@ -9,6 +9,11 @@
 	 line-height: 30px;
 	 font-size: 15px;	 
 	 background: #edc233;
+	 background-image: url("http://bjstlh.com/data/wallpapers/26/WDF_736733.jpg");
+	 background-attachment: fixed;
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: cover;
 	 }
 
 form {
