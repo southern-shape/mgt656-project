@@ -370,6 +370,39 @@ function api (request, response){
       response.json(contextData);
     });
 }
+
+
+function updateEventsapi(req, res, next) {
+  db.none('update events set title=$1, image=$2 where id=$3',
+    [req.body.title, req.body.image, parseInt(req.params.id,10)])
+    .then(function () {
+      res.status(200)
+        .json({
+          status: 'success',
+          message: 'Updated event'
+        });
+    })
+    .catch(function (err) {
+      return next(err);
+    });
+}
+
+
+function removeEventsapi(req, res, next) {
+  var ev = parseInt(req.params.id, 10);
+  console.log("here");
+  db.result('delete from events where id = $1', ev)
+    .then(function (result) {
+      res.status(200)
+        .json({
+          status: 'success',
+          message: `Removed ${result.rowCount} event`
+        });
+    })
+    .catch(function (err) {
+      return next(err);
+    });
+}
 //================================API Call - JSON response==============================E
 
 
@@ -386,5 +419,7 @@ module.exports = {
   'newEvent': newEvent,
   'saveEvent': saveEvent,
   'rsvp': rsvp, 
-  'api': api
+  'api': api,
+  'updateEventsapi': updateEventsapi,
+  'removeEventsapi': removeEventsapi
 };

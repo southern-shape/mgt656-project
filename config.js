@@ -33,6 +33,3 @@ module.exports = exports = function(yourApp){
   // forms and such.
   yourApp.use(bodyParser.urlencoded({extended: true}));
 };
-
-
-
