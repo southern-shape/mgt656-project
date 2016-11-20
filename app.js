@@ -5,7 +5,7 @@ var express = require('express');
 var configure = require('./config.js');
 
 // Import our controllers
-var indexControllers = require('./controllers/index.js');
+//var indexControllers = require('./controllers/index.js');
 var aboutControllers = require('./controllers/about.js');
 var eventControllers = require('./controllers/events.js');
 
@@ -18,7 +18,7 @@ configure(app);
 
 
 // Add routes mapping URLs to controllers
-app.get('/', indexControllers.index);
+app.get('/', eventControllers.index);
 app.get('/about', aboutControllers.about);
 app.get('/events', eventControllers.listEvents);
 app.get('/events/new', eventControllers.newEvent);

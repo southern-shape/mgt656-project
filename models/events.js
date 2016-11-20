@@ -2,11 +2,11 @@
 
 /**
  * An Array of all the events
- */
+*/
 var allEvents = [
   {
     id: 0,
-    title: 'The Super Superman Party',
+    title: 'The Super Superman Bro Party',
     // Note that JavaScript months are zero-indexed,
     // so, month zero is January. This is Jan 17th
     // 2013 at 4:30pm local time.
