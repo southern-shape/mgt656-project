@@ -128,6 +128,18 @@ function newEvent(request, response){
 
 
 
+/**
+ * Controller that renders a page for creating new events.
+ */
+//==================================404 page=====================================
+function catchall404(request, response){
+  var contextData = {};
+  response.render('404.html', contextData);
+}
+//==================================404 page=====================================E
+
+
+
 
 /**
  * Controller to which new events are submitted.
@@ -206,9 +218,15 @@ function saveEvent(request, response){
     //Sets newId to the current number of entries
     db.any('select * from events')
     .then(function (data) {
-        var newId =  data.length;
-        console.log(newId);
-    
+        var newId = 0;
+        for (var i = data.length - 1; i >= 0; i--) {
+          if (newId < data[i].id) {
+            newId = data[i].id;
+          }
+        }
+        newId++;
+        
+        
         var newEvent = {
           id: newId,
           title: request.body.title,
@@ -256,7 +274,8 @@ function eventDetail (request, response) {
   var contextData = {'event':[], 'errors':[]};  
   
   if (ev === null) {
-    response.status(404).send('No such event');
+    //response.status(404).send('No such event');
+    response.render('404.html', contextData);
   }
   
   db.one('select * from events where id = $1', ev)
@@ -270,7 +289,8 @@ function eventDetail (request, response) {
       contextData = {
         'errors': err
       };
-        response.status(404).send('No such event');
+        //response.status(404).send('No such event');
+        response.render('404.html', contextData);
     });
 }
 //==================================Detail page function================================E
@@ -287,7 +307,8 @@ function rsvp (request, response){
   var ev = parseInt(request.params.id,10);
   var contextData = {'event':[], 'errors':[]};
   if (ev === null) {
-    response.status(404).send('No such event');
+    //response.status(404).send('No such event');
+    response.render('404.html', contextData);
   }
 
   db.one('select * from events where id = $1', ev)
@@ -324,7 +345,8 @@ function rsvp (request, response){
         'errors': err
       };
       console.log(contextData);      
-      response.status(404).send('No such event');
+      //response.status(404).send('No such event');
+      response.render('404.html', contextData);
   });
 }
 //==================================RSVP ka jugaad======================================E
@@ -421,5 +443,6 @@ module.exports = {
   'rsvp': rsvp, 
   'api': api,
   'updateEventsapi': updateEventsapi,
-  'removeEventsapi': removeEventsapi
+  'removeEventsapi': removeEventsapi,
+  'catchall404': catchall404
 };
