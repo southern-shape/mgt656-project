@@ -19,19 +19,39 @@
 <b>LOCATION:</b>
 <span id=location>{{event.location}}</span>
 <br></br>
-{% if event.attending.length > 0 %}
-    <h3> Who's Attending? </h3>
-    <ul id="attendees"> 
-    {% for atendee in event.attending%}
-        <li><i>{{atendee}}</i></li>
-    {% endfor %}
-    </ul>
+
+{% if event.date < time %}
+    {% if event.attending.length > 0 %}
+        <h3> Who Attended? </h3>
+        <ul id="attendees"> 
+        {% for atendee in event.attending%}
+            <li><i>{{atendee}}</i></li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    {% if event.attending.length == 0 %}
+        <h3> Who Attended? </h3>
+        <ul id="attendees"> 
+            <li><i>No one!</i></li>    
+    {% endif %}
 {% endif %}
-{% if event.attending.length == 0 %}
-    <h3> Who's Attending? </h3>
-    <ul id="attendees"> 
-        <li><i>Be the first one!</i></li>    
+
+{% if event.date >= time %}
+    {% if event.attending.length > 0 %}
+        <h3> Who's Attending? </h3>
+        <ul id="attendees"> 
+        {% for atendee in event.attending%}
+            <li><i>{{atendee}}</i></li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    {% if event.attending.length == 0 %}
+        <h3> Who's Attending? </h3>
+        <ul id="attendees"> 
+            <li><i>Be the first one!</i></li>    
+    {% endif %}
 {% endif %}
+
 </div>
 
 <div id=rsvptextblock>

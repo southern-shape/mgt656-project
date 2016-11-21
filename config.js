@@ -16,7 +16,7 @@ module.exports = exports = function(yourApp){
       autoescape: true,
       express: yourApp
   }).addFilter('prettyDate', function(dateObject) {
-      return strftime('%A, %b. %e at %l:%M%P', dateObject);
+      return strftime('%A, %b. %e %Y at %l:%M%P.', dateObject);
   });
 
   // Use 'development' level of logging, ie. verbose

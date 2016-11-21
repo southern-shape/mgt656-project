@@ -1,6 +1,6 @@
 'use strict';
 
-var events = require('../models/events');
+//var events = require('../models/events');
 var validator = require('validator');
 
 //===========================================Connecting to DB=================================================
@@ -42,6 +42,21 @@ function checkIntRange(request, fieldName, minVal, maxVal, contextData){
   }
   return value;
 }
+
+//Custom function to help me sort before pushing the list off to the events list
+/*If the return value is negative, the first argument (a in this case), will precede the second argument (b) in the sorted array.
+If the returned value is zero, their position with respect to each other remains unchanged.
+If the returned value is positive, b precedes a in the sorted array*/
+
+//Ascending
+function custom_sort_index(a, b) {
+  return new Date(a.date).getTime() - new Date(b.date).getTime();
+}
+
+//Descending
+function custom_sort(b, a) {
+  return new Date(a.date).getTime() - new Date(b.date).getTime();
+}
 //===========================================Custom functions=================================================E
 
 
@@ -54,17 +69,20 @@ function checkIntRange(request, fieldName, minVal, maxVal, contextData){
 //==========================================Index file function moved from index.js===========================
 function index (request, response) {
   var now = new Date();
+  var currentTime = new Date();
   var resultData = {'events': []};
   var contextData = {
     'title': 'MGT 656',
     'tagline': 'You are doomed (just kidding).',
-    'events': []
+    'events': [],
+    'time': currentTime
   };
 
   db.any('select * from events')
     .then(function (data) {
+      data.sort(custom_sort_index);
       resultData = {
-        'events': data,
+        'events': data
       };
   
       for (var i=0; i < resultData.events.length; i++) {
@@ -97,6 +115,7 @@ function listEvents(request, response) {
   var contextData = {'events':[], 'time':[], 'errors': []};
   db.any('select * from events')
     .then(function (data) {
+      data.sort(custom_sort);
       contextData = {
         'events': data,
         'time': currentTime
@@ -271,6 +290,7 @@ function saveEvent(request, response){
 //==================================Detail page function================================
 function eventDetail (request, response) {
   var ev = parseInt(request.params.id,10);
+  var currentTime = new Date();
   var contextData = {'event':[], 'errors':[]};  
   
   if (ev === null) {
@@ -281,7 +301,8 @@ function eventDetail (request, response) {
   db.one('select * from events where id = $1', ev)
     .then(function (data) {
       contextData = {
-        'event': data
+        'event': data,
+        'time': currentTime
       };
       response.render('event-detail.html', contextData);
     })
@@ -305,6 +326,7 @@ function eventDetail (request, response) {
 //==================================RSVP ka jugaad======================================
 function rsvp (request, response){
   var ev = parseInt(request.params.id,10);
+  var currentTime = new Date();
   var contextData = {'event':[], 'errors':[]};
   if (ev === null) {
     //response.status(404).send('No such event');
@@ -314,9 +336,10 @@ function rsvp (request, response){
   db.one('select * from events where id = $1', ev)
     .then(function (data) {
       contextData = {
-        'event': data
+        'event': data,
+        'time': currentTime
       };
-
+      
       var at = request.body.email.indexOf('@');
       var end = request.body.email.substring(at +1, request.body.email.length);
       
@@ -324,7 +347,14 @@ function rsvp (request, response){
         contextData.event.attending.push(request.body.email);
         db.none('update events set attending=to_json($1) where id = $2', [contextData.event.attending, ev])
         .then(function (data) {
-          console.log("updated successfully");
+          var reset = 0;
+          db.none('UPDATE events set attending=\'["kyle.jensen@yale.edu","not.batman@yale.edu","lex.luthor@yale.edu"]\' where id = $1',reset)
+          .then(function (data) {
+            //The foobar problem is fixed by updating the event 0.
+          })
+          .catch(function(err) {
+            console.log(err);
+          });
         })
         .catch(function (err) {
           console.log(err);

@@ -3,7 +3,12 @@
     <li class="event" id="event-{{event.id}}">
       <a href="/events/{{event.id}}">{{event.title}}.</a>
       <time datetime="{{event.date}}">{{event.date|prettyDate}}</time>
+      {% if event.date < time %}
+      {{event.attending.length}} attended.
+      {% endif %}
+      {% if event.date >= time %}
       {{event.attending.length}} attending so far.
+      {% endif %}
     </li>
   {% endfor %}
 </ul>
