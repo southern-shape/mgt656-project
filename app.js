@@ -49,6 +49,10 @@ app.get('/x5', function(request, response){
     response.sendfile('weekly-reports/report5_11_17.html', {root: __dirname });
 });
 
+app.get('/x6', function(request, response){
+    response.sendfile('weekly-reports/reportfinal_11_21.html', {root: __dirname });
+});
+
 app.get('*', eventControllers.catchall404);
 
 module.exports = app;
