@@ -52,6 +52,7 @@ form {
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
   width: 100%;
   overflow-x: hidden;
+  word-wrap: break-word;
 }
 
 #eventdetailmainblock img {
@@ -66,6 +67,8 @@ form {
   text-align: left;
   padding: 25px;
   left: 360px;
+  max-width: 385px;
+  word-wrap: break-word;
 }
 
 #rsvptextblock {

@@ -68,8 +68,8 @@ function custom_sort(b, a) {
  */
 //==========================================Index file function moved from index.js===========================
 function index (request, response) {
-  var now = new Date();
-  var currentTime = new Date();
+  var d = new Date();
+  var currentTime = new Date(d.getTime() + (3600000*(-5)));
   var resultData = {'events': []};
   var contextData = {
     'title': 'MGT 656',
@@ -86,7 +86,7 @@ function index (request, response) {
       };
   
       for (var i=0; i < resultData.events.length; i++) {
-        if (resultData.events[i].date > now) {
+        if (resultData.events[i].date > currentTime) {
           contextData.events.push(resultData.events[i]);
         }
       }
@@ -111,7 +111,8 @@ function index (request, response) {
  */
 //==================================List Events==========================================
 function listEvents(request, response) {
-  var currentTime = new Date();
+  var d = new Date();
+  var currentTime = new Date(d.getTime() + (3600000*(-5)));
   var contextData = {'events':[], 'time':[], 'errors': []};
   db.any('select * from events')
     .then(function (data) {
@@ -171,7 +172,7 @@ function saveEvent(request, response){
   
   //=======================All the checks for the form===================================
   if (validator.isLength(request.body.title, 5, 50) === false) {
-    contextData.errors.push('Your title should be between 5 and 100 letters.');
+    contextData.errors.push('Your title should be between 5 and 50 letters.');
   }
   
   if (validator.isURL(request.body.image) === false) {
@@ -229,6 +230,7 @@ function saveEvent(request, response){
   }
   
   var hour = checkIntRange(request, 'hour', 0, 23, contextData);
+  var minute = checkIntRange(request, 'minute', 0, 60, contextData);
     //=======================All the checks for the form===================================E
   
   
@@ -251,7 +253,7 @@ function saveEvent(request, response){
           title: request.body.title,
           location: request.body.location,
           image: request.body.image,
-          date: new Date(year, month, day, hour),
+          date: new Date(year, month, day, hour, minute),
           attending: []
         };
     
@@ -290,7 +292,8 @@ function saveEvent(request, response){
 //==================================Detail page function================================
 function eventDetail (request, response) {
   var ev = parseInt(request.params.id,10);
-  var currentTime = new Date();
+  var d = new Date();
+  var currentTime = new Date(d.getTime() + (3600000*(-5)));
   var contextData = {'event':[], 'errors':[]};  
   
   if (ev === null) {
@@ -326,7 +329,8 @@ function eventDetail (request, response) {
 //==================================RSVP ka jugaad======================================
 function rsvp (request, response){
   var ev = parseInt(request.params.id,10);
-  var currentTime = new Date();
+  var d = new Date();
+  var currentTime = new Date(d.getTime() + (3600000*(-5)));
   var contextData = {'event':[], 'errors':[]};
   if (ev === null) {
     //response.status(404).send('No such event');
